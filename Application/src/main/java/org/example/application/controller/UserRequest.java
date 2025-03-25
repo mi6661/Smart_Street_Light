@@ -1,13 +1,13 @@
 package org.example.application.controller;
 
 
+import org.example.application.dao.UserLogin;
 import org.example.application.entity.User;
+import org.example.application.response.ApiResonse;
 import org.example.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,5 +30,19 @@ public class UserRequest {
     @GetMapping("/list")
     public List<User> list(){
         return userService.getAllUsers();
+    }
+
+    @PostMapping("/login")
+    public ApiResonse<UserLogin> login(@RequestParam String username,@RequestParam String password){
+        UserLogin userLogin = userService.FindPasswordRoleByUsername(username);
+        if(userLogin == null) return ApiResonse.fail("用户不存在");
+
+        //判断密码是否争取
+        if(password.equals(userLogin.password)){
+            return ApiResonse.success(userLogin);
+        }else{
+            return ApiResonse.fail("账号或密码错误");
+        }
+
     }
 }

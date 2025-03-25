@@ -1,5 +1,6 @@
 package org.example.application.service;
 
+import org.example.application.dao.UserLogin;
 import org.example.application.entity.User;
 import org.example.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     public List<User> getAllUsers(){
         return userRepository.getAllUser();
     }
+
+    //获取用户密码和角色信息
+    public UserLogin FindPasswordRoleByUsername(String username){
+        return userRepository.getUserByUserName(username);
+    }
+
 }
