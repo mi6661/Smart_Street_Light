@@ -2,7 +2,7 @@ package org.example.application.dao;
 
 
 //用户登录dao实体
-public class UserLogin {
+public class UserInfo {
     //用户名
     public String username;
     //用户密码

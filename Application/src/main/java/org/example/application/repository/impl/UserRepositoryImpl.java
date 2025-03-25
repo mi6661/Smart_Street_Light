@@ -1,22 +1,17 @@
 package org.example.application.repository.impl;
 
-import org.example.application.dao.UserLogin;
+import org.example.application.dao.UserInfo;
 import org.example.application.entity.User;
 import org.example.application.repository.UserRepository;
 import org.example.application.utils.Loginfo;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -27,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+    @Override
     //以列表形返回表中所有用户信息
     public List<User> getAllUser() {
         String sql = "select * from users";
@@ -47,10 +42,10 @@ public class UserRepositoryImpl implements UserRepository {
         });
         return list;
     }
-
+    @Override
     //通过用户名放回用户信息
-    public UserLogin getUserByUserName(String username){
-        UserLogin userlogin = new UserLogin();
+    public UserInfo getUserByUserName(String username){
+        UserInfo userlogin = new UserInfo();
         String sql = "select * from users where username=?";
         jdbcTemplate.query(sql, new Object[]{username}, new RowCallbackHandler() {
             @Override
@@ -62,5 +57,15 @@ public class UserRepositoryImpl implements UserRepository {
             }
         });
         return userlogin.username!=null?userlogin:null;
+    }
+
+    @Override
+    //插入用户信息
+    public boolean insert(UserInfo info){
+        String username = info.username;
+        String password = info.password;
+        int role = info.role;
+        String sql = "INSERT INTO users (username,`password`,role) VALUES(?,?,?);";
+        return jdbcTemplate.update(sql,username,password,role) == 1;
     }
 }
