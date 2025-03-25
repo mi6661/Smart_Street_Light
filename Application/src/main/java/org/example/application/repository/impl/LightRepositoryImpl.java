@@ -3,6 +3,7 @@ package org.example.application.repository.impl;
 import org.example.application.dao.LightInfo;
 import org.example.application.entity.StreetLight;
 import org.example.application.repository.LightRepository;
+import org.example.application.response.ApiResonse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
@@ -39,5 +40,66 @@ public class LightRepositoryImpl implements LightRepository {
             }
         });
         return result;
+    }
+
+    //通过路灯id,查找路灯信息
+    public LightInfo getLightInfo(int id) {
+        String sql = "select * from street_lights where _id=?";
+        List<LightInfo> list = jdbcTemplate.query(sql, new Object[]{id}, new RowMapper<LightInfo>() {
+            @Override
+            public LightInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                LightInfo lightInfo = new LightInfo();
+                lightInfo.id = rs.getInt(1);
+                lightInfo.location = rs.getString(2);
+                lightInfo.status = rs.getInt(3);
+                lightInfo.brightness = rs.getInt(4);
+                return lightInfo;
+            }
+        });
+        //这里id是唯一的，所以list只有一个对象
+        try{
+            return list.get(0);
+        }catch (Exception e){
+            //id不存在，返回空值
+            return null;
+        }
+    }
+
+    @Override
+    //更新路灯状态
+    public int updateLight(LightInfo lightInfo) {
+        String sql = "UPDATE street_lights " +
+                     "SET location = ? , brightness = ? , status = ? " +
+                     "WHERE _id = ?";
+        return jdbcTemplate.update(sql, new Object[]{lightInfo.location, lightInfo.brightness, lightInfo.status,lightInfo.id});
+    }
+
+    @Override
+    public int addLight(LightInfo lightInfo) {
+        String sql = "INSERT INTO street_lights (location,`status`,brightness) VALUES (?,?,?)";
+        return jdbcTemplate.update(sql, new Object[]{lightInfo.location, lightInfo.status, lightInfo.brightness});
+    }
+
+    //为了提高路灯的控制效率，所以单独给修改路灯状态写sql
+
+    @Override
+    public boolean updateStatus(int id, int status) {
+        String sql = "UPDATE street_lights SET `status` = ? WHERE _id = ?";
+        try {
+            return jdbcTemplate.update(sql, new Object[]{status, id})==1;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean updateBrightness(int id, int brightness) {
+        String sql = "UPDATE street_lights SET `brightness` = ? WHERE _id = ?";
+        try{
+            return jdbcTemplate.update(sql, new Object[]{brightness, id})==1;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

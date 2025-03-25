@@ -9,7 +9,8 @@ public class LightInfo {
     @Override
     public String toString() {
         return "LightInfo{" +
-                "location='" + location + '\'' +
+                "id=" + id +
+                ", location='" + location + '\'' +
                 ", status=" + status +
                 ", brightness=" + brightness +
                 '}';
