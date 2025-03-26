@@ -18,12 +18,12 @@ public class LightRequest {
     @Autowired
     private LightService lightService;
 
-    @GetMapping("/test")
+    @GetMapping("/list")
     public List<StreetLight> test(){
         return lightService.getAllLights();
     }
 
-
+    //通过id查寻路灯
     @PostMapping("/id")
     public ApiResonse<LightInfo> findById(@RequestParam int id){
         LightInfo lightInfo = lightService.getLightInfo(id);
@@ -33,6 +33,7 @@ public class LightRequest {
         return ApiResonse.success(lightInfo);
     }
 
+    //添加路灯
     @PostMapping("/addLight")
     public ApiResonse<Boolean> addLight(@RequestBody LightInfo light){
         if (lightService.addLight(light)){
