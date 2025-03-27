@@ -23,7 +23,7 @@ public class LightRequest {
         return lightService.getAllLights();
     }
 
-    //通过id查寻路灯
+    //通过id查寻路灯状态
     @PostMapping("/id")
     public ApiResonse<LightInfo> findById(@RequestParam int id){
         LightInfo lightInfo = lightService.getLightInfo(id);
