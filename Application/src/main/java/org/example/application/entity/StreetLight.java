@@ -7,10 +7,12 @@ public class StreetLight {
     public int _id;
     //路灯位置
     public String location;
-    //路灯状态(开：1，关：-1，自动：0)
-    public int status;
+    //路灯状态
+    public String status;
     //路灯亮度（0-100）
     public int brightness;
+    //路灯自动状体
+    public String auto;
     //创建时间
     public Date create_time;
 
@@ -19,8 +21,9 @@ public class StreetLight {
         return "StreetLight{" +
                 "_id=" + _id +
                 ", location='" + location + '\'' +
-                ", status=" + status +
+                ", status='" + status + '\'' +
                 ", brightness=" + brightness +
+                ", auto='" + auto + '\'' +
                 ", create_time=" + create_time +
                 '}';
     }

@@ -17,15 +17,16 @@ INSERT INTO users (username,`password`,role) VALUES('lelecha','asd12345',1);
 CREATE TABLE IF NOT EXISTS street_lights(
   _id INT NOT NULL AUTO_INCREMENT,
   location VARCHAR(255) NOT NULL,
-  `status` INT NOT NULL CHECK(`status` IN (1,-1,0)),
+  `status` VARCHAR(10) NOT NULL CHECK(`status` IN ('on', 'off')),
   brightness INT NOT NULL CHECK(brightness>=0 AND brightness <=100 ),
+	auto VARCHAR(10) NOT NULL CHECK( auto IN ('on','off')),
   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (_id)
 );
 
 #插入路灯状态测试数据
-INSERT INTO street_lights (location,`status`,brightness) VALUES('辽宁省沈阳市浑南区沈阳理工大学东门',1,50);
-INSERT INTO street_lights (location,`status`,brightness) VALUES('辽宁省沈阳市浑南区沈阳理工大学综合楼A',0,99);
+INSERT INTO street_lights (location,`status`,brightness,auto) VALUES('辽宁省沈阳市浑南区沈阳理工大学东门','on',50,'off');
+INSERT INTO street_lights (location,`status`,brightness,auto) VALUES('辽宁省沈阳市浑南区沈阳理工大学综合楼A','off',99,'on');
 
 
 #3.创建传感器数据
@@ -47,7 +48,7 @@ CREATE TABLE control_logs(
   _id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   light_id INT NOT NULL,
-  action INT NOT NULL CHECK(action IN(1,-1,0)),
+  action INT NOT NULL CHECK(action IN(1,2,0)),
   `value` INT NOT NULL CHECK(`value`>=0 AND `value`<=100),
   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(_id)

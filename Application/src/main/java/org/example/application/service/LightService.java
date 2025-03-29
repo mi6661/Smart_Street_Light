@@ -39,11 +39,15 @@ public class LightService {
     }
 
     //修改单个路灯状态
-    public boolean updateStatus(int id,int status){
+    public boolean updateStatus(int id,String status){
         return lightRepository.updateStatus(id,status);
     }
     //修改单个路灯亮度
     public boolean updateBrightness(int id, int brightness){
         return lightRepository.updateBrightness(id,brightness);
+    }
+    //修改单个路灯自动控制
+    public boolean updateAuto(int id, String auto){
+        return lightRepository.updateAuto(id, auto);
     }
 }

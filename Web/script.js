@@ -1,25 +1,27 @@
-// 路灯数据
+// 路灯数据测试数据
 let lights = [
-    { id: 1, location: '主街道', status: 'on', brightness: 80 },
-    { id: 2, location: '公园大道', status: 'off', brightness: 0 },
-    { id: 3, location: '商业区', status: 'on', brightness: 60 },
-    { id: 4, location: '住宅区', status: 'off', brightness: 40 }
+    { id: 1, location: '主街道', status: 'on', brightness: 80 , auto: 'off'},
+    { id: 2, location: '公园大道', status: 'off', brightness: 0 , auto: 'off'},
+    { id: 3, location: '商业区', status: 'on', brightness: 60 , auto: 'off'},
+    { id: 4, location: '住宅区', status: 'off', brightness: 40 , auto: 'off'}
 ];
 
 //路灯实体类
 class Light{
-    constructor(id,location,status,brightness){
+    constructor(id,location,status,brightness,auto){
         this.id = id;
         this.location = location;
         this.status = status;
         this.brightness = brightness;
+        this.auto = auto;
     }
     getLight(){
         let light = {
             id: this.id,
             location: this.location,
             status: this.status,
-            brightness: this.brightness
+            brightness: this.brightness,
+            auto: this.auto
         }
         return light;
     }
@@ -35,16 +37,16 @@ async function getData(url) {
         }
         let data = await response.json(); // 解析 JSON
         for(var i=0;i<data.length;i++){
-            light = new Light(
-                data[i]._id,
-                data[i].location,
-                data[i].status == -1 ? "off":"on",
-                data[i].brightness
-            );
+            let id = data[i]._id;
+            let location = data[i].location;
+            let status = data[i].status;
+            let brightness = data[i].brightness;
+            let auto = data[i].auto;
+            light = new Light(id,location,status,brightness,auto);
             lights.push(light);
-            console.log(light);
         }
-        return data; // 返回解析后的数据
+        //数据请求完成后，初始化界面
+        Init();
     } catch (error) {
         console.log('There was a problem with your fetch operation:', error);
     }
@@ -54,20 +56,15 @@ async function getData(url) {
 
 
 
-
-// 初始化页面
-document.addEventListener('DOMContentLoaded', function() {
+//初始化页面
+function Init() {
     const lightGrid = document.getElementById('light-grid');
     const lightControl = document.getElementById('light-control');
     const controlTitle = document.getElementById('control-title');
     const toggleBtn = document.getElementById('toggle-btn');
+    const autoBtn = document.getElementById('auto-btn');
     const brightnessSlider = document.getElementById('brightness-slider');
     const brightnessValue = document.getElementById('brightness-value');
-
-    let data = getData("http://127.0.0.1:8081/light/list")
-    renderLights();
-    console.log(lights);
-
 
     let selectedLight = null;
 
@@ -97,14 +94,28 @@ document.addEventListener('DOMContentLoaded', function() {
         lightControl.style.display = 'block';
     }
 
-    // 切换路灯状态
+    // 切换路灯开关状态
     toggleBtn.addEventListener('click', function() {
+        
         if (selectedLight) {
             selectedLight.status = selectedLight.status === 'on' ? 'off' : 'on';
             toggleBtn.textContent = selectedLight.status === 'on' ? '关闭路灯' : '开启路灯';
             renderLights();
+
+            data = new Light(
+                selectedLight.id,
+                selectedLight.location,
+                selectedLight.status,
+                selectedLight.brightness
+            )
+            console.log(data);
         }
     });
+    //切换路灯自动状态
+    autoBtn.addEventListener('click',function(){
+        console.log('切换路灯状态');
+    })
+
 
     // 调节亮度
     brightnessSlider.addEventListener('input', function() {
@@ -112,9 +123,24 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedLight.brightness = this.value;
             brightnessValue.textContent = `${this.value}%`;
             renderLights();
+
+            data = new Light(
+                selectedLight.id,
+                selectedLight.location,
+                selectedLight.status,
+                selectedLight.brightness
+            )
+            console.log(data);
         }
     });
 
     // 初始渲染
     renderLights();
-});
+}
+
+
+
+
+
+
+getData("http://127.0.0.1:8081/light/list");//从后端更新lights中的数据

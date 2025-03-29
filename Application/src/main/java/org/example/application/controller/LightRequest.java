@@ -44,7 +44,7 @@ public class LightRequest {
 
     //修改单个路灯状态
     @PostMapping("/changeStatus")
-    public ApiResonse<Boolean> updateLightStatus(@RequestParam int id, @RequestParam int status){
+    public ApiResonse<Boolean> updateLightStatus(@RequestParam int id, @RequestParam String status){
         if (lightService.updateStatus(id,status)) return ApiResonse.success(true);
         return ApiResonse.fail("状态修改失败");
     }
@@ -54,5 +54,12 @@ public class LightRequest {
     public ApiResonse<Boolean> updateLightBrightness(@RequestParam int id,@RequestParam int brightness){
         if (lightService.updateBrightness(id,brightness)) return ApiResonse.success(true);
         return ApiResonse.fail("亮度修改失败");
+    }
+
+    //修改单个路灯自动状态
+    @PostMapping("/changeAuto")
+    public ApiResonse<Boolean> updateLightAuto(@RequestParam int id, @RequestParam String auto){
+        if (lightService.updateAuto(id,auto)) return ApiResonse.success(true);
+        return ApiResonse.fail("状态修改失败");
     }
 }
