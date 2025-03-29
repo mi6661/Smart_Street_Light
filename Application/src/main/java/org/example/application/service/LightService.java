@@ -16,7 +16,7 @@ public class LightService {
     private LightRepository lightRepository;
     //返回所以路灯信息
     public List<StreetLight> getAllLights() {
-        return getAllLights();
+        return lightRepository.getAllLights();
     }
     //通过id查询路灯信息
     public LightInfo getLightInfo(int id){
