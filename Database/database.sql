@@ -47,7 +47,7 @@ CREATE TABLE control_logs(
   _id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   light_id INT NOT NULL,
-  action INT NOT NULL CHECK(action IN(1,2,0)),
+  action INT NOT NULL CHECK(action IN(1,-1,0)),
   `value` INT NOT NULL CHECK(`value`>=0 AND `value`<=100),
   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(_id)
