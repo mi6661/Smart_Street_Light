@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能路灯控制系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <h1>智能路灯控制系统</h1>
+        <div id="light-grid" class="light-grid">
+            <!-- 路灯卡片将通过JS动态生成 -->
+        </div>
+        
+        <div id="light-control" class="light-control" style="display: none;">
+            <h2 id="control-title">控制面板</h2>
+            <button id="toggle-btn">开关路灯</button>
+            <div class="brightness-control">
+                <label for="brightness-slider">亮度调节: </label>
+                <input type="range" id="brightness-slider" min="0" max="100" value="50">
+                <span id="brightness-value">50%</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

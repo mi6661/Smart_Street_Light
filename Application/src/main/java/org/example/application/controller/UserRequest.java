@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+
 public class UserRequest {
 
     @Autowired
@@ -23,6 +24,7 @@ public class UserRequest {
     @GetMapping("/test")
     public String test(){
         return "Hello World";
+
     }
 
     @GetMapping("/list")
