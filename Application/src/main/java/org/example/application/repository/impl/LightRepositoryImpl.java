@@ -81,37 +81,4 @@ public class LightRepositoryImpl implements LightRepository {
         String sql = "INSERT INTO street_lights (location,`status`,brightness,auto) VALUES(?,?,?,?)";
         return jdbcTemplate.update(sql, new Object[]{lightInfo.location, lightInfo.status, lightInfo.brightness , lightInfo.auto});
     }
-
-    //为了提高路灯的控制效率，所以单独给修改路灯状态写sql
-
-    @Override
-    public boolean updateStatus(int id, String status) {
-        String sql = "UPDATE street_lights SET `status` = ? WHERE _id = ?";
-        try {
-            return jdbcTemplate.update(sql, new Object[]{status, id})==1;
-        }catch (Exception e){
-            return false;
-        }
-
-    }
-
-    @Override
-    public boolean updateBrightness(int id, int brightness) {
-        String sql = "UPDATE street_lights SET `brightness` = ? WHERE _id = ?";
-        try{
-            return jdbcTemplate.update(sql, new Object[]{brightness, id})==1;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateAuto(int id, String auto) {
-        String sql = "UPDATE street_lights SET `auto` = ? WHERE _id = ?";
-        try{
-            return jdbcTemplate.update(sql, new Object[]{auto, id})==1;
-        }catch (Exception e){
-            return false;
-        }
-    }
 }

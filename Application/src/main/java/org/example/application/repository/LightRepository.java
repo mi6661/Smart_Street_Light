@@ -14,7 +14,4 @@ public interface LightRepository {
     public int updateLight(LightInfo lightInfo);
     public int addLight(LightInfo lightInfo);
 
-    public boolean updateStatus(int id, String status);
-    public boolean updateBrightness(int id, int brightness);
-    public boolean updateAuto(int id, String auto);
 }

@@ -6,13 +6,15 @@ public class LightInfo {
     public String status;
     public int brightness;
     public String auto;
+
     @Override
     public String toString() {
         return "LightInfo{" +
                 "id=" + id +
                 ", location='" + location + '\'' +
-                ", status=" + status +
+                ", status='" + status + '\'' +
                 ", brightness=" + brightness +
+                ", auto='" + auto + '\'' +
                 '}';
     }
 }

@@ -18,6 +18,7 @@ public class LightRequest {
     @Autowired
     private LightService lightService;
 
+    //所有路灯信息
     @GetMapping("/list")
     public List<StreetLight> test(){
         return lightService.getAllLights();
@@ -42,24 +43,12 @@ public class LightRequest {
         return ApiResonse.fail("添加失败");
     }
 
-    //修改单个路灯状态
-    @PostMapping("/changeStatus")
-    public ApiResonse<Boolean> updateLightStatus(@RequestParam int id, @RequestParam String status){
-        if (lightService.updateStatus(id,status)) return ApiResonse.success(true);
-        return ApiResonse.fail("状态修改失败");
-    }
-
-    //修改单个路灯亮度
-    @PostMapping("/changeBrightness")
-    public ApiResonse<Boolean> updateLightBrightness(@RequestParam int id,@RequestParam int brightness){
-        if (lightService.updateBrightness(id,brightness)) return ApiResonse.success(true);
-        return ApiResonse.fail("亮度修改失败");
-    }
-
-    //修改单个路灯自动状态
-    @PostMapping("/changeAuto")
-    public ApiResonse<Boolean> updateLightAuto(@RequestParam int id, @RequestParam String auto){
-        if (lightService.updateAuto(id,auto)) return ApiResonse.success(true);
-        return ApiResonse.fail("状态修改失败");
+    //修改状态
+    @PostMapping("/update")
+    public ApiResonse<Boolean> updateLight(@RequestBody LightInfo light){
+        if(lightService.update(light)){
+            return ApiResonse.success(true);
+        }
+        return ApiResonse.fail("更新失败");
     }
 }
