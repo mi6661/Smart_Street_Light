@@ -55,7 +55,7 @@ async function getData(url) {
 }
 
 //发送post请求
-export async function SendData(url,data){
+async function SendData(url,data){
 
     fetch(url,{
         method: 'POST',
