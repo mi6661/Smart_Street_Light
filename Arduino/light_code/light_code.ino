@@ -2,8 +2,8 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "514";
-const char* password = "Abc12345678";
+const char* ssid = "Xiaomi  14";
+const char* password = "asd620510";
 JsonDocument json;
 
 //连接wifi的函数
@@ -20,12 +20,10 @@ void wifiInit(const char* ssid, const char* password) {
   Serial.print("IP:");
   Serial.println(WiFi.localIP());
 }
-
-
 //HTTP_GET请求
 String http_get(String url) {
 
-  String data = "off";
+  String data = "null";
   //http请求
   HTTPClient http;                   //声明HTTPClient对象
   http.begin(url);                   //准备开始连接
@@ -42,9 +40,22 @@ String http_get(String url) {
   return data;
 }
 //HTTP_POST
-
-
-
+String http_post(String url,String payload){
+  String data = "null";
+  //http请求
+  HTTPClient http;
+  http.begin(url);//向api发起连接请求
+  http.addHeader("Content-Type","application/json");//添加请求头
+  int httpCode = http.POST(payload);//发起POST请求
+  if(httpCode > 0){
+    data = http.getString();
+    Serial.println(data);
+  }else{
+    Serial.printf("[HTTP]POST... faild,error:%s",http.errorToString(httpCode).c_str());
+  }
+  http.end();
+  return data;
+}
 //解析json数据
 void getJson(String data) {
   Serial.println(data);
@@ -91,8 +102,8 @@ void getJson(String data) {
 
 void setup() {
   wifiInit(ssid, password);
-  String data = http_get("http://192.168.3.41:8081/light/list");
-  getJson(data);
+  String payload = "{\"id\": 5,\"location\": \"上海浦东新区\",\"status\": \"off\",\"brightness\": 66,\"auto\": \"on\"}";
+  http_post("http://192.168.1.120:8081/light/update",payload);
 }
 
 void loop() {
