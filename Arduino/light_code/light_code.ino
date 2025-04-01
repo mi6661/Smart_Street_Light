@@ -2,10 +2,118 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "Xiaomi  14";
-const char* password = "asd620510";
-JsonDocument json;
+//light类
+class Light{
+  private:
+    int id;
+    String location;
+    String status;
+    int brightness;
+    String Auto;
+    StaticJsonDocument<200> doc;
+  public:
+    //构造方法
+    Light(int id,String location,String status,int brightness,String Auto){
+      this->id = id;
+      this->location = location;
+      this->status = status;
+      this->brightness = brightness;
+      this->Auto = Auto;
+    }
+    //setter
+    void setLocation(String location){
+      this->location = location;
+    }
+    void setStatus(String status){
+      this->status = status;
+    }
+    void setBrightness(int brightness){
+      this->brightness = brightness;
+    }
+    void setAuto(String Auto){
+      this->Auto = Auto;
+    }
+    //getter
+    String getLoaction(){
+      return this->location;
+    }
+    String getStatus(){
+      return this->status;
+    }
+    int getBrightness(){
+      return this->brightness;
+    }
+    String getAuto(){
+      return this->Auto;
+    }
+    //获取light的jsonString
+    String getJsonString(){
+      this->doc["id"] = id;
+      this->doc["location"] = location;
+      this->doc["status"] = status;
+      this->doc["brightness"] = brightness;
+      this->doc["auto"] = Auto;
+      String data;
+      serializeJson(this->doc,data);
+      return data;
+    }
+};
 
+//HTTP管理类
+class HttpManager{
+  private:
+    String updateUrl;
+    String loadUrl;
+  public:
+    HttpManager(String updateUrl,String loadUrl){
+      this->updateUrl = updateUrl;
+      this->loadUrl = loadUrl;
+    }
+    
+    String get(){
+      String data = "null";
+      HTTPClient http;
+      http.begin(this->loadUrl);
+      int httpCode = http.GET();
+      if(httpCode > 0){
+        if(httpCode == HTTP_CODE_OK){
+          data = http.getString();
+        }
+      }else{
+        Serial.printf("[HTTP]GET... faild,error:%s\n",http.errorToString(httpCode).c_str());
+      }
+      http.end();
+      return data;
+    }
+    String post(String body){
+      String data = "null";
+      HTTPClient http;
+      http.begin(this->updateUrl);
+      http.addHeader("Content-Type","application/json");
+      int httpCode = http.POST(body);
+      if(httpCode > 0){
+        data =  http.getString();
+      }else{
+        Serial.printf("[HTTP]POST... faild,error:%s\n",http.errorToString(httpCode).c_str());
+      }
+      http.end();
+      return data;
+    }
+    String post(int id){
+      String data = "null";
+      HTTPClient http;
+      http.begin(this->updateUrl+"?id="+id);
+      http.addHeader("Content-Type","application/json");
+      int httpCode = http.POST("");
+      if(httpCode > 0){
+        data = http.getString();
+      }else{
+        Serial.printf("[HTTP]POST... faild,error:%s\n",http.errorToString(httpCode).c_str());
+      }
+      http.end();
+      return data;
+    }
+};
 //连接wifi的函数
 void wifiInit(const char* ssid, const char* password) {
   // wifi连接
@@ -49,7 +157,6 @@ String http_post(String url,String payload){
   int httpCode = http.POST(payload);//发起POST请求
   if(httpCode > 0){
     data = http.getString();
-    Serial.println(data);
   }else{
     Serial.printf("[HTTP]POST... faild,error:%s",http.errorToString(httpCode).c_str());
   }
@@ -98,12 +205,18 @@ void getJson(String data) {
   }
 }
 
-
+Light light(5,"上海浦东新区","off",34,"on");
+const char* ssid = "Xiaomi  14";
+const char* password = "asd620510";
+String loadUrl = "http://192.168.1.120:8081/light/id";
+String updataUrl = "http://192.168.1.120:8081/light/update";
+JsonDocument json;//json解析对象
 
 void setup() {
   wifiInit(ssid, password);
-  String payload = "{\"id\": 5,\"location\": \"上海浦东新区\",\"status\": \"off\",\"brightness\": 66,\"auto\": \"on\"}";
-  http_post("http://192.168.1.120:8081/light/update",payload);
+  HttpManager manager(updataUrl,loadUrl);
+  String data = manager.post(5);
+  Serial.println(data);
 }
 
 void loop() {
