@@ -1,8 +1,7 @@
+#include "DHT.h"
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
-#include <WiFi.h>
-#include "DHT.h"
-
+#include <WiFi.h> // Wi-Fi 库
 // light类
 class Light {
   private:
@@ -10,9 +9,9 @@ class Light {
     String location;
     String status;
     int brightness;
-    float temp;
-    float humi;
     String Auto;
+    float humi;
+    float temp;
     StaticJsonDocument<200> doc;
 
   public:
@@ -31,8 +30,8 @@ class Light {
     void setStatus(String status) { this->status = status; }
     void setBrightness(int brightness) { this->brightness = brightness; }
     void setAuto(String Auto) { this->Auto = Auto; }
-    void setHumi(float humi){ this->humi = humi;}
-    void setTemp(float temp){ this->temp = temp;}
+    void setHumi(float humi){this->humi = humi;}
+    void setTemp(float temp){this->temp = temp;}
     // getter
     int getId() { return this->id; }
     String getLoaction() { return this->location; }
@@ -45,6 +44,8 @@ class Light {
         this->doc["location"] = location;
         this->doc["status"] = status;
         this->doc["brightness"] = brightness;
+        this->doc["temperature"] = temp;
+        this->doc["humidity"] = humi;
         this->doc["auto"] = Auto;
         String data;
         serializeJson(this->doc, data);
@@ -116,8 +117,6 @@ class HttpManager {
     }
 };
 
-
-
 // Json工具类
 class JsonTools {
   private:
@@ -172,37 +171,78 @@ void wifiInit(const char *ssid, const char *password) {
     Serial.println(WiFi.localIP());
 }
 
+#define DHTPIN 4      // DHT11 数据引脚连接到 GPIO 4
+#define DHTTYPE DHT11 // DHT 11
+
+// 定义光敏传感器引脚
+#define LIGHT_SENSOR_PIN 17 // 光敏传感器的 DO 引脚连接到 GPIO17
+#define LED_PIN 16          // LED 连接到 GPIO16
+
 //基本信息配置
-Light light(5, "上海浦东新区", "off", 34, "on");
+Light light(4, "上海浦东新区", "off", 34, "on");
 const char *ssid = "514";
 const char *password = "Abc12345678";
 String loadUrl = "http://192.168.3.41:8081/light/id"; //获取路灯信息url;
-String updataUrl = "http://192.168.3.41:8081/light/update"; //更新路灯信息url;
+String updataUrl = "http://192.168.3.41:8081/light/updates"; //更新路灯信息url;
 HttpManager manager(light.getId(), updataUrl, loadUrl);
 JsonTools tools;
+DHT dht(DHTPIN, DHTTYPE); // 创建 DHT 传感器对象
 
+void setup() {
+    wifiInit(ssid, password);
+    dht.begin(); // 初始化 DHT11 传感器
 
-
-#define DHTPIN 4     // DHT11 数据引脚连接到 GPIO 4
-#define DHTTYPE DHT11   // DHT 11
-// 定义光敏传感器引脚
-#define LIGHT_SENSOR_PIN 17  // 光敏传感器的 DO 引脚连接到 GPIO17
-#define LED_PIN 16           // LED 连接到 GPIO16
-
-DHT dht(DHTPIN, DHTTYPE);  // 创建 DHT 传感器对象
-
-
-void setup() { 
-    wifiInit(ssid, password); 
+    // 设置 LED 引脚为输出
+    pinMode(LED_PIN, OUTPUT);
+    pinMode(LIGHT_SENSOR_PIN, INPUT); // 设置光敏传感器引脚为输入
 }
 
 void loop() {
-    String jsStr = manager.post();
-    Serial.println("获取数据：" + jsStr);
-    bool status = tools.setJsonString(jsStr);
-    Serial.println(tools.getLocation());
-    Serial.println(tools.getLightStatus());
-    Serial.println(tools.getBrightness());
-    Serial.println(tools.getAuto());
-    delay(1000);
+    // 读取温湿度数据
+
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
+    Serial.printf("%f ",temperature);
+    Serial.printf("%f\n",humidity);
+    light.setHumi(humidity);
+    light.setTemp(temperature);
+    String lightJson = light.getJsonString();
+    Serial.println(lightJson);
+    String stu = manager.post(lightJson);//#######
+
+    String jsonData = manager.post();
+    tools.setJsonString(jsonData);
+    String status = tools.getLightStatus();
+    String Auto = tools.getAuto();
+    int brightness = tools.getBrightness();
+    //Serial.printf("%s %s %d\n", status,Auto,brightness);
+    /*
+
+    // 检查温湿度是否有效
+    if (isnan(temperature) || isnan(humidity)) {
+      Serial.println("读取温湿度数据失败");
+    } else {
+      // 打印温湿度数据到串口
+      Serial.print("温度: ");
+      Serial.print(temperature);
+      Serial.print(" °C\t");
+
+      Serial.print("湿度: ");
+      Serial.print(humidity);
+      Serial.println(" %");
+    }
+
+    // 读取光敏传感器数据（数字值）
+    int lightValue = digitalRead(LIGHT_SENSOR_PIN);
+    Serial.print("光敏传感器值: ");
+    Serial.println(lightValue);
+
+    // 设置光照阈值来控制 LED
+    if (lightValue == LOW) {  // 如果光线较弱，打开 LED
+      digitalWrite(LED_PIN, HIGH);  // 打开 LED
+    } else {
+      digitalWrite(LED_PIN, LOW);   // 关闭 LED
+    }
+    */
+    delay(5000); // 每 0.5 秒读取一次数据
 }
