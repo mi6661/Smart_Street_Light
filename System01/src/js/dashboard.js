@@ -32,7 +32,8 @@ let device = {
     humi: null,
     pm25: null,
     lux: null,
-    lastUpdate: new Date()
+    create_time: null,
+    lastUpdate: new Date(),
 }
 // 更新设备状态
 function updateDeviceStatus() {
@@ -116,8 +117,8 @@ function updateTimeDisplay() {
 
 //路灯图片资源
 const lampImages = {
-    on: './res/on.jpg',
-    off:'./res/off.jpg'
+    on: '../res/on.jpg',
+    off:'../res/off.jpg'
 };
 
 function fresh(){
@@ -143,11 +144,13 @@ function fresh(){
                 humi: sensorData != null ? sensorData["humidity"] : null,
                 pm25: sensorData != null ? sensorData["pm24"] : null,
                 lux: null,
+                create_time: sensorData != null ? sensorData["create_time"] : null,
                 lastUpdate: new Date()
             };
         }
     }).then(()=>{
         device = devices[0];
+        console.log(device["create_time"]);
         updateDeviceStatus();
     })
 }

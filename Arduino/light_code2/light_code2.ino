@@ -197,8 +197,8 @@ void wifiInit(const char *ssid, const char *password) {
 #define DHTTYPE DHT11  // DHT 11
 
 // 定义光敏传感器引脚
-#define LIGHT_SENSOR_PIN 17  // 光敏传感器的 DO 引脚连接到 GPIO17
-#define LED_PIN 16           // LED 连接到 GPIO16
+#define LIGHT_SENSOR_PIN 17  // 光敏传感器的 AO 引脚连接到 GPIO17
+#define LED_PIN 5            // LED 连接到 GPIO5
 
 //基本信息配置
 Light light(1, "上海浦东新区", "off", 34, "on");
@@ -227,10 +227,19 @@ void loop() {
   String status = tools.getLightStatus();
   int brightness = tools.getBrightness();
   String Auto = tools.getAuto();
-  Serial.printf("status:%s  brightness:%d  Auto:%s\n",status,brightness,Auto);
+  Serial.printf("status:%s  brightness:%d  Auto:%s\n", status, brightness, Auto);
   light.setStatus(status);
   light.setBrightness(brightness);
   light.setAuto(Auto);
+
+  //设置灯的状态
+  int value = 255 / 100 * brightness;
+  if (status == "on") {
+    analogWrite(LED_PIN, value);
+  } else {
+    analogWrite(LED_PIN, 0);
+  }
+
 
   // 读取温湿度数据
   float temperature = dht.readTemperature();
@@ -241,6 +250,9 @@ void loop() {
   Serial.println(lightJson);
   String stu = manager.post(lightJson);  //上传读取的传感器数据
 
+  float lightValue = analogRead(LIGHT_SENSOR_PIN);
+  Serial.print("光敏传感器值: ");
+  Serial.println(lightValue);
 
   /*
 
@@ -259,9 +271,7 @@ void loop() {
     }
 
     // 读取光敏传感器数据（数字值）
-    int lightValue = digitalRead(LIGHT_SENSOR_PIN);
-    Serial.print("光敏传感器值: ");
-    Serial.println(lightValue);
+    
 
     // 设置光照阈值来控制 LED
     if (lightValue == LOW) {  // 如果光线较弱，打开 LED

@@ -1,6 +1,8 @@
 package org.example.application.entity;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class SensorData {
     //传感器数据id
@@ -14,7 +16,7 @@ public class SensorData {
     //pm24浓度
     public float pm24;
     //数据插入时间
-    public Date create_time;
+    public Timestamp create_time;
 
     @Override
     public String toString() {

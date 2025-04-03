@@ -45,7 +45,7 @@ public class SensorRepositoryImpl implements SensorRepository {
                 data.temperature = rs.getInt(3);
                 data.humidity = rs.getInt(4);
                 data.pm24 = rs.getInt(5);
-                data.create_time = rs.getDate(6);
+                data.create_time = rs.getTimestamp(6);
                 return data;
             }
         }));
@@ -65,7 +65,7 @@ public class SensorRepositoryImpl implements SensorRepository {
                 data.temperature = rs.getFloat(3);
                 data.humidity = rs.getFloat(4);
                 data.pm24 = rs.getInt(5);
-                data.create_time = rs.getDate(6);
+                data.create_time = rs.getTimestamp(6);
                 return data;
             }
         });
