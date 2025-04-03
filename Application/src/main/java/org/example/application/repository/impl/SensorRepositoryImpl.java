@@ -62,8 +62,8 @@ public class SensorRepositoryImpl implements SensorRepository {
                 SensorData data = new SensorData();
                 data._id = rs.getInt(1);
                 data.light_id = rs.getInt(2);
-                data.temperature = rs.getInt(3);
-                data.humidity = rs.getInt(4);
+                data.temperature = rs.getFloat(3);
+                data.humidity = rs.getFloat(4);
                 data.pm24 = rs.getInt(5);
                 data.create_time = rs.getDate(6);
                 return data;

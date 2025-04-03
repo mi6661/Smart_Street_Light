@@ -127,6 +127,7 @@ function fresh(){
         }
         return response.json();
     }).then(response=>{
+        console.log(response);
         for (let i = 0; i < response.length; i++) {
             let light = response[i]["light"];
             let sensorData = response[i]["sensorData"];
@@ -147,13 +148,9 @@ function fresh(){
         }
     }).then(()=>{
         device = devices[0];
-        console.log(device);
         updateDeviceStatus();
     })
 }
-
-
-
 
 
 
