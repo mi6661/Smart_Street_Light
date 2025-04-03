@@ -1,6 +1,7 @@
 package org.example.application.service;
 
 
+import org.example.application.dao.LightWithLastSensorData;
 import org.example.application.dao.SensorDao;
 import org.example.application.entity.SensorData;
 import org.example.application.repository.SensorRepository;
@@ -37,5 +38,10 @@ public class SensorService {
             }
         }
         return aimData;
+    }
+
+    //后去指定路灯id的最新数据
+    public SensorData getAllLightRealTimeData(int light_id){
+        return sensorRepository.getRealTimeSensorData(light_id);
     }
 }

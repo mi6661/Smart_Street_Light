@@ -1,6 +1,7 @@
 package org.example.application.repository.impl;
 
 import org.example.application.dao.LightInfo;
+import org.example.application.entity.SensorData;
 import org.example.application.entity.StreetLight;
 import org.example.application.repository.LightRepository;
 import org.example.application.response.ApiResonse;

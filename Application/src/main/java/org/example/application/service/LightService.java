@@ -62,13 +62,15 @@ public class LightService {
         return unionData;
     }
 
-    //获取与所有路灯当前的传感器数据
+    //获取与所有路灯当前的实时传感器数据
     public List<LightWithLastSensorData> getAllLightsWithLastSensorData(){
         List<StreetLight> lights = getAllLights();
         List<LightWithLastSensorData> unionData = new ArrayList<>();
         for(StreetLight light : lights){
             int light_id = light._id;
-
+            SensorData TimeData = sensorService.getAllLightRealTimeData(light_id);
+            LightWithLastSensorData lws = new LightWithLastSensorData(light,TimeData);
+            unionData.add(lws);
         }
         return unionData;
     }

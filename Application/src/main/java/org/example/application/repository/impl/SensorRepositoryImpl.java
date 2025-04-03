@@ -52,7 +52,26 @@ public class SensorRepositoryImpl implements SensorRepository {
         return list;
     }
 
+    @Override
+    public SensorData getRealTimeSensorData(int id) {
+        String sql = "select * from sensor_data  where light_id = ? order by create_time desc limit 1";
+        List<SensorData> query = jdbcTemplate.query(sql, new Object[]{id}, new RowMapper<SensorData>() {
 
-
-
+            @Override
+            public SensorData mapRow(ResultSet rs, int rowNum) throws SQLException {
+                SensorData data = new SensorData();
+                data._id = rs.getInt(1);
+                data.light_id = rs.getInt(2);
+                data.temperature = rs.getInt(3);
+                data.humidity = rs.getInt(4);
+                data.pm24 = rs.getInt(5);
+                data.create_time = rs.getDate(6);
+                return data;
+            }
+        });
+        if (query.size() > 0) {
+            return query.get(0);
+        }
+        return null;
+    }
 }

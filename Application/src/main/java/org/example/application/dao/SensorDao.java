@@ -17,6 +17,8 @@ public class SensorDao {
         this.pm24 = pm24;
     }
 
+    public SensorDao() {}
+
     @Override
     public String toString() {
         return "SensorDao{" +

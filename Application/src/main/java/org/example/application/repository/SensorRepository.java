@@ -11,5 +11,5 @@ import java.util.List;
 public interface SensorRepository {
     public boolean insert(SensorDao dao);
     public List<SensorData> getSensors();
-    //public SensorData getLastSensorByLightId(int light_id);
+    public SensorData getRealTimeSensorData(int id);
 }

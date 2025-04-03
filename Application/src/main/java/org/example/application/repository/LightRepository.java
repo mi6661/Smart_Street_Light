@@ -2,6 +2,8 @@ package org.example.application.repository;
 
 
 import org.example.application.dao.LightInfo;
+import org.example.application.dao.SensorDao;
+import org.example.application.entity.SensorData;
 import org.example.application.entity.StreetLight;
 import org.springframework.stereotype.Repository;
 

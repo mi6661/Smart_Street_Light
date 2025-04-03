@@ -1,12 +1,11 @@
 package org.example.application.controller;
 
 
-import org.example.application.dao.LightInfo;
-import org.example.application.dao.LightSensor;
-import org.example.application.dao.LightWithAllSensorData;
+import org.example.application.dao.*;
 import org.example.application.entity.StreetLight;
 import org.example.application.response.ApiResonse;
 import org.example.application.service.LightService;
+import org.example.application.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +17,8 @@ public class LightRequest {
 
     @Autowired
     private LightService lightService;
+    @Autowired
+    private SensorService sensorService;
 
     //所有路灯信息
     @GetMapping("/list")
@@ -47,23 +48,43 @@ public class LightRequest {
     //修改状态
     @PostMapping("/update")
     public ApiResonse<Boolean> updateLight(@RequestBody LightInfo light){
+        System.out.println(light.toString());
         if(lightService.update(light)){
             return ApiResonse.success(true);
         }
         return ApiResonse.fail("更新失败");
     }
-    //硬件修改数据
+    //硬件传入温度湿度等数据
     @PostMapping("/updates")
     public ApiResonse<Boolean> updateLights(@RequestBody LightSensor info){
-
-        System.out.println(info.toString());
-
-        return  ApiResonse.success(true);
+        //路灯控制数据信息
+        LightInfo light = new LightInfo();
+        light.id = info.id;
+        light.location = info.location;
+        light.status = info.status;
+        light.brightness = info.brightness;
+        light.auto = info.auto;
+        //传感器数据信息
+        SensorDao sensor = new SensorDao();
+        sensor.light_id = info.id;
+        sensor.temperature = info.temperature;
+        sensor.humidity = info.humidity;
+        sensor.pm24 = -1;//目前硬件还没有pm2.5检测
+        if(lightService.update(light)&&sensorService.insertData(sensor)){
+            return  ApiResonse.success(true);
+        }
+        return ApiResonse.fail("添加失败");
     }
 
     //返回路灯和传感器匹配的数据集合
     @GetMapping("/listinfo")
     public List<LightWithAllSensorData> getLightsandsensors(){
         return lightService.getAllLightsWithSensorData();
+    }
+
+    //返回路灯信息和路灯实时数据
+    @GetMapping("/real_time_list")
+    public List<LightWithLastSensorData> getRealtimeLights(){
+        return lightService.getAllLightsWithLastSensorData();
     }
 }
