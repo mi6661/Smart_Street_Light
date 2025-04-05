@@ -1,24 +1,27 @@
 // dashboardPanel.js
 
 function createDashboardPanel(containerId, data) {
-    const container = document.getElementById(containerId);
-  
-    const {
-      lampControl = {},
-      environment = {}
-    } = data;
-  
-    const lampPanel = document.createElement('div');
-    lampPanel.className = 'control-panel';
-    lampPanel.innerHTML = `
+  const container = document.getElementById(containerId);
+
+  const {
+    lampControl = {},
+    environment = {}
+  } = data;
+
+  const abox = document.createElement('div');
+  abox.className = 'mainpanel';
+
+  const lampPanel = document.createElement('div');
+  lampPanel.className = 'control-panel';
+  lampPanel.innerHTML = `
       <div class="panel-header">
         <div class="panel-icon">💡</div>
         <h3>路灯控制</h3>
-        <span class="status-badge status-online">${lampControl.status==='on'?'在线':'离线' || '离线'}</span>
+        <span class="status-badge status-online">${lampControl.status === 'on' ? '在线' : '离线' || '离线'}</span>
       </div>
   
       <div class="lamp-visual">
-        <img class="lamp-image" src="${ lampControl.status==='on' ? lampImages.on:lampImages.off || ''}" alt="智慧路灯">
+        <img class="lamp-image" src="${lampControl.status === 'on' ? lampImages.on : lampImages.off || ''}" alt="智慧路灯">
       </div>
   
       <table class="status-table">
@@ -46,10 +49,10 @@ function createDashboardPanel(containerId, data) {
         </button>
       </div>
     `;
-  
-    const envPanel = document.createElement('div');
-    envPanel.className = 'control-panel';
-    envPanel.innerHTML = `
+
+  const envPanel = document.createElement('div');
+  envPanel.className = 'control-panel';
+  envPanel.innerHTML = `
       <div class="panel-header">
         <div class="panel-icon">🌡️</div>
         <h3>环境监测</h3>
@@ -58,48 +61,78 @@ function createDashboardPanel(containerId, data) {
       <div class="sensor-card">
         <h4>温度</h4>
         <div class="sensor-value">${environment.tempValue || '--'}℃</div>
-        <div>更新时间: <span class="temp-time">${environment.time || '--'}</span></div>
+        <div>更新时间: <span class="time">${environment.time || '--'}</span></div>
       </div>
   
       <div class="sensor-card">
         <h4>湿度</h4>
         <div class="sensor-value">${environment.humiValue || '--'}%</div>
-        <div>更新时间: <span class="humi-time">${environment.tTime || '--'}</span></div>
+        <div>更新时间: <span class="time">${environment.tTime || '--'}</span></div>
       </div>
   
       <div class="sensor-card">
         <h4>光照强度</h4>
         <div class="sensor-value">${environment.luxValue || '--'}LUX</div>
-        <div>更新时间: <span class="lux-time">${environment.time || '--'}</span></div>
+        <div>更新时间: <span class="time">${environment.time || '--'}</span></div>
       </div>
     `;
+
+  // 添加逻辑交互
+  const slider = lampPanel.querySelector('.brightness-slider');
+  const brightnessPercent = lampPanel.querySelector('.brightness-percent');
+  const lampImage = lampPanel.querySelector('.lamp-image');
+
+  //亮度调节监听
+  slider.addEventListener('input', () => {
+    const percent = slider.value + '%';
+    brightnessPercent.textContent = percent;
+    lampPanel.querySelector('.brightness-value').textContent = percent;
+  });
+
+  //开启按钮监听
+  lampPanel.querySelector('.btn-on').addEventListener('click', (e) => {
+    const panel = e.currentTarget.closest('.control-panel');
+    panel.querySelector('.status-text').textContent = '已开启';
+    lampImage.src = ""
+  });
+
+  //关闭按钮监听
+  lampPanel.querySelector('.btn-off').addEventListener('click', (e) => {
+    const panel = e.currentTarget.closest('.control-panel');
+    panel.querySelector('.status-text').textContent = '已关闭';
+  });
+
+  abox.appendChild(lampPanel);
+  abox.appendChild(envPanel);
+  container.appendChild(abox);
+  return abox;
+}
+
+//更新模块数据
+function updateDashboardPanel(containerElement, newdata) {
+  const panels = containerElement.querySelectorAll('.control-panel');
+  const lampPanel = panels[0];
+  const envPanel = panels[1];
+
+  if(lampPanel && newdata.lampControl){
+    const lamp = newdata.lampControl;
+    lampPanel.querySelector('.status-online').textContent = lamp.status === 'on' ? '在线' : '离线';
+    lampPanel.querySelector('.lamp-image').src = lamp.status === 'on' ? lampImages.on : lampImages.off;
+    lampPanel.querySelector('.device-id').textContent = lamp.deviceId;
+    lampPanel.querySelector('.status-text').textContent = lamp.statusText;
+    lampPanel.querySelector('.current-value').textContent = lamp.currentValue;
+    lampPanel.querySelector('.power-value').textContent = lamp.powerValue;
+    lampPanel.querySelector('.brightness-value').textContent = lamp.brightnessValue;
+    lampPanel.querySelector('.brightness-percent').textContent = lamp.brightnessValue+"%";
+    lampPanel.querySelector('.brightness-slider').value = lamp.brightnessValue;
   
-    // 添加逻辑交互
-    const slider = lampPanel.querySelector('.brightness-slider');
-    const brightnessPercent = lampPanel.querySelector('.brightness-percent');
-    const lampImage = lampPanel.querySelector('.lamp-image');
-  
-    //亮度调节监听
-    slider.addEventListener('input', () => {
-      const percent = slider.value + '%';
-      brightnessPercent.textContent = percent;
-      lampPanel.querySelector('.brightness-value').textContent = percent;
-    });
-    
-    //开启按钮监听
-    lampPanel.querySelector('.btn-on').addEventListener('click', (e) => {
-      const panel = e.currentTarget.closest('.control-panel');
-      panel.querySelector('.status-text').textContent = '已开启';
-      lampImage.src = ""
-    });
-    
-    //关闭按钮监听
-    lampPanel.querySelector('.btn-off').addEventListener('click', (e) => {
-      const panel = e.currentTarget.closest('.control-panel');
-      panel.querySelector('.status-text').textContent = '已关闭';
-    });
-  
-    
-    container.appendChild(lampPanel);
-    container.appendChild(envPanel);
   }
+
+  if(envPanel&&newdata.environment){
+    const envi = newdata.environment;
+    envPanel.querySelectorAll('.sensor-value')[0].textContent = envi.tempValue;
+    envPanel.querySelectorAll('.sensor-value')[1].textContent = envi.humiValue;
+    envPanel.querySelectorAll('.sensor-value')[2].textContent = envi.luxValue;
+    envPanel.querySelectorAll('.time').textContent = envi.time;
+  }
+}

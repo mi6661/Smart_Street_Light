@@ -206,9 +206,15 @@ body::before {
 /* 控制面板 */
 .panel-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: 100%;
     gap: 2.5rem;
     margin-top: 2rem;
+}
+
+.mainpanel:not(.control-panel){
+    display:flex;
+    justify-content:space-between;
+    flex-wrap: nowrap;
 }
 
 .control-panel {
