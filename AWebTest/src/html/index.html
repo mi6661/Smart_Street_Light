@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧路灯系统 - 总控中心</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+
+    
+</head>
+
+<body>
+    <!-- 跟踪导航栏 -->
+    <nav class="sticky-nav">
+        <div class="nav-container">
+            <span class="nav-title">智能路灯系统</span>
+            <ul class="nav-list">
+                <li class="nav-item active"><a href="index.html">总控中心</a></li>
+                <li class="nav-item"><a href="monitor.html">实时监控</a></li>
+                <li class="nav-item"><a href="history.html">历史数据</a></li>
+                <li class="nav-item"><a href="management.html">设备管理</a></li>
+                <div class="nav-indicator"></div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <section id="dashboard" class="section active">
+            <h2 class="section-title">总控中心</h2>
+            
+            <!-- 以下数据为各个路灯的数据以及控制面板，由js来动态渲染生成-->
+            <div class="panel-grid" id="main">
+            </div>
+            
+        </section>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/utils/dashboardPanel.js"></script>
+    
+</body>
+
+</html>

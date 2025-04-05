@@ -15,6 +15,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:63342")
                 .allowedOrigins("http://localhost:63343")
                 .allowedOrigins("http://localhost:63342")
+                .allowedOrigins("http://127.0.0.1:5500")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")//允许的https方法
                 .allowedHeaders("*")//允许的请求头
                 .allowCredentials(true)//允许携带cookie
