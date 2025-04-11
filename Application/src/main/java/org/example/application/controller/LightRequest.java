@@ -9,6 +9,8 @@ import org.example.application.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,6 +21,14 @@ public class LightRequest {
     private LightService lightService;
     @Autowired
     private SensorService sensorService;
+
+    //路灯授时api
+    @GetMapping("/time")
+    public String getTime(){
+        Date date = new Date();
+        long timestamp = System.currentTimeMillis();
+        return String.valueOf(timestamp);
+    }
 
     //所有路灯信息
     @GetMapping("/list")

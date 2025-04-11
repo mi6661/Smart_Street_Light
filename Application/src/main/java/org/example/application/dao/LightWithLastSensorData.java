@@ -10,5 +10,4 @@ public class LightWithLastSensorData {
         this.light = light;
         this.sensorData = sensorData;
     }
-
 }
