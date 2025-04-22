@@ -1,4 +1,4 @@
-package http;
+package com.example.gwen.entity;
 
 public class Light {
     public int id;
@@ -23,13 +23,12 @@ public class Light {
     }
     //生成json文件格式
     public String getJson(){
-        String json = "{" +
+        return "{" +
                 "\"id\":" + id + "," +
                 "\"location\":\"" + location + "\"," +
                 "\"status\":\"" + status + "\"," +
                 "\"brightness\":" + brightness + "," +
                 "\"auto\":\"" + auto + "\"" + "}";
-        return json;
     }
 
     //提供一个模板

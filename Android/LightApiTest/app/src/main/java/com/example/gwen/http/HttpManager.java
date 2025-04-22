@@ -1,9 +1,14 @@
-package http;
+package com.example.gwen.http;
+
+import com.example.gwen.entity.Light;
+import com.example.gwen.utils.TimeUtil;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -19,14 +24,14 @@ public class HttpManager {
     public String getLightById(int id){
         StringBuffer response = new StringBuffer();
         try{
-            String urlString = String.format(baseUrl+"/light/id?id=%d", id);
-            URL url = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setReadTimeout(5000);
+            URL url = new URL(baseUrl + "/light/list");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000);
-            InputStream inputStream = connection.getInputStream();
+            connection.setReadTimeout(5000);
 
+            System.out.println(url);
+            InputStream inputStream = connection.getInputStream();
             InputStreamReader isreader = new InputStreamReader(inputStream);
             BufferedReader bfreader = new BufferedReader(isreader);
 
@@ -34,9 +39,11 @@ public class HttpManager {
             while((line = bfreader.readLine())!=null){
                 response.append(line);
             }
+            System.out.println(response.toString());
             return response.toString();
         }catch(Exception e){
-            System.out.println("[ERROR]"+TimeUtil.getTime()+":HttpManager.getLightById");
+            e.printStackTrace();
+            System.out.println("[ERROR]"+ TimeUtil.getTime()+"__"+e.getMessage()+":HttpManager.getLightById");
             return null;
         }
     }

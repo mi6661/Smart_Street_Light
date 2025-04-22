@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--网路安全配置，因为Android不允许明文访问http,所以需要配置-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">49.232.141.65</domain>
+    </domain-config>
+    <base-config cleartextTrafficPermitted="true"/>
+</network-security-config>

@@ -1,19 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_width="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_light_info"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        tools:text="hello world"/>
+    <Button
+        android:id="@+id/btn_light_get"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/btn_light_get"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="@string/light_id"/>
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:inputType="number" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="@string/light_location"/>
+        <EditText
+            android:id="@+id/et_location"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="@string/light_status"/>
+        <EditText
+            android:id="@+id/et_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="@string/light_brightness"/>
+        <EditText
+            android:id="@+id/et_brightness"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="@string/light_auto"/>
+        <EditText
+            android:id="@+id/et_auto"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"/>
+    </LinearLayout>
+
+
+</LinearLayout>
