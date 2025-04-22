@@ -31,7 +31,6 @@ void GpioManager::init(){
 
 // 获取光照强度
 int GpioManager::getLightValue() {
-    Serial.println("\n开始读取光照强度...");
     int rawValue = analogRead(light_sensor_analog_pin);
     float voltage = rawValue / 4096.0*3.3;
     float resistance =  voltage/(3.3 - voltage)  * 10000.0;
@@ -39,20 +38,13 @@ int GpioManager::getLightValue() {
     float lightIntensity=40000*pow(X,-0.6021);
     if(lightIntensity>999)
     {
-      lightIntensity=999;
+        lightIntensity=999;
     }
-    Serial.print("原始值: ");
-    Serial.print(rawValue);
-    Serial.print(", 电压: ");
-    Serial.print(voltage);
-    Serial.print("V, 电阻: ");
-    Serial.print(resistance);
-    Serial.print("Ω, 光照强度: ");
-    Serial.println(lightIntensity);
+    //返回光照强度
     return lightIntensity;
 }
 
-//光敏传感
+//光敏传感(天黑为true，天亮为false)
 bool GpioManager::get_light_sensor(){
     return digitalRead(this->light_sensor_digit_pin) == 0;
 }
@@ -68,8 +60,8 @@ float GpioManager::getHumidity(){
 //设置LED状态
 void GpioManager::LedWrite(bool status){
     if(status){
-        digitalWrite(this->led_pin,LOW);
-    }else{
         digitalWrite(this->led_pin,HIGH);
+    }else{
+        digitalWrite(this->led_pin,LOW);
     }
 }
