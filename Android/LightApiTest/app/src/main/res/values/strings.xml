@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">路灯调试</string>
     <string name="btn_light_get">获取路灯基本信息</string>
     <string name="light_id">路灯编号</string>
     <string name="light_location">路灯位置</string>
     <string name="light_status">路灯状态</string>
     <string name="light_brightness">路灯亮度</string>
     <string name="light_auto">自动开关</string>
+    <string name="btn_update">更新路灯状态</string>
 </resources>

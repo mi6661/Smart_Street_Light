@@ -24,9 +24,9 @@ public class HttpManager {
     public String getLightById(int id){
         StringBuffer response = new StringBuffer();
         try{
-            URL url = new URL(baseUrl + "/light/list");
+            URL url = new URL(baseUrl + "/light/id?id="+id);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
 
@@ -49,7 +49,7 @@ public class HttpManager {
     }
 
     //跟新路灯状态信息
-    public boolean setLight(Light light){
+    public String setLight(Light light){
         StringBuffer response = new StringBuffer();
         String urlString = baseUrl+"/light/update";                         
         String post_body =  light.getJson();
@@ -79,11 +79,9 @@ public class HttpManager {
             while ((line=bfreader.readLine())!=null) {
                 response.append(line);
             }
-            System.out.println("[SUCCESSFUL]"+TimeUtil.getTime()+":HttpManager.setLight "+response);
-            return true;
+            return ("[SUCCESSFUL]"+TimeUtil.getTime()+":HttpManager.setLight "+response);
         }catch(Exception e){
-            System.out.println("[ERROR]"+TimeUtil.getTime()+":HttpManager.setLight");
-            return false;
+            return ("[ERROR]"+TimeUtil.getTime()+":HttpManager.setLight");
         }
     }
 }
