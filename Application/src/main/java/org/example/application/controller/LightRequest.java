@@ -80,7 +80,8 @@ public class LightRequest {
         sensor.temperature = info.temperature;
         sensor.humidity = info.humidity;
         sensor.pm24 = -1;//目前硬件还没有pm2.5检测
-        if(lightService.update(light)&&sensorService.insertData(sensor)){
+
+        if(sensorService.insertData(sensor)){
             return  ApiResonse.success(true);
         }
         return ApiResonse.fail("添加失败");
