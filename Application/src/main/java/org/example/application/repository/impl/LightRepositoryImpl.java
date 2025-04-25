@@ -72,8 +72,8 @@ public class LightRepositoryImpl implements LightRepository {
     //更新路灯状态
     public int updateLight(LightInfo lightInfo) {
         String sql = "UPDATE street_lights " +
-                     "SET location = ?  , status = ? , brightness = ? , auto = ?" +
-                     "WHERE _id = ?";
+                    "SET location = ?  , status = ? , brightness = ? , auto = ?" +
+                    "WHERE _id = ?";
         return jdbcTemplate.update(sql, new Object[]{lightInfo.location,lightInfo.status,lightInfo.brightness,lightInfo.auto,lightInfo.id});
     }
 

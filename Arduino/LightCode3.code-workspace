@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "LightCode3"
+		},
+		{
+			"name": "SocketTest",
+			"path": "Modules/SocketTest"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "cpp",
+			"string": "cpp",
+			"string_view": "cpp"
+		}
+	}
+}

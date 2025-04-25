@@ -7,6 +7,7 @@ import org.example.application.response.ApiResonse;
 import org.example.application.service.LightService;
 import org.example.application.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.crypto.Data;
@@ -21,6 +22,8 @@ public class LightRequest {
     private LightService lightService;
     @Autowired
     private SensorService sensorService;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     //路灯授时api
     @GetMapping("/time")
@@ -64,7 +67,14 @@ public class LightRequest {
         }
         return ApiResonse.fail("更新失败");
     }
+
+
     //硬件传入温度湿度等数据
+    /**
+     * 这里是一个高负载的api，这里需要使用redis缓存数据来降低数据库请求压力。
+     * @param info
+     * @return
+     */
     @PostMapping("/updates")
     public ApiResonse<Boolean> updateLights(@RequestBody LightSensor info){
         //路灯控制数据信息
@@ -85,6 +95,7 @@ public class LightRequest {
             return  ApiResonse.success(true);
         }
         return ApiResonse.fail("添加失败");
+
     }
 
     //返回路灯和传感器匹配的数据集合
@@ -97,5 +108,20 @@ public class LightRequest {
     @GetMapping("/real_time_list")
     public List<LightWithLastSensorData> getRealtimeLights(){
         return lightService.getAllLightsWithLastSensorData();
+    }
+
+    //Redis测试接口
+    @GetMapping("/redis_test_set")
+    public boolean test_redis_set(){
+        try{
+            redisTemplate.opsForValue().set("light:1:status", "Hello World");
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+    @GetMapping("/redis_test_get")
+    public String test_redis_get(){
+        return redisTemplate.opsForValue().get("light:1:status");
     }
 }
