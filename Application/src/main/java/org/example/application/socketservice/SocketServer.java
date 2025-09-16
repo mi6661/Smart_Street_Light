@@ -51,6 +51,7 @@ public class SocketServer {
                     }
                 }
             }catch (IOException e){
+                System.out.println("Error in connection at port"+port);
                 e.printStackTrace();
             }
         }).start();
