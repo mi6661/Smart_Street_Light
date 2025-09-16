@@ -5,7 +5,7 @@
 class JsonTools {
     private:
         String jsonString;
-        StaticJsonDocument<200> doc;
+        JsonDocument doc;
         DeserializationError error;
     public:
         bool setJsonString(String jsonString);

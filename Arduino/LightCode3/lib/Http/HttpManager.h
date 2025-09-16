@@ -17,5 +17,8 @@ class HttpManager {
       String get();
       String post(String body);
       String post();
-    };
+  };
+
+//连接wifi的函数
+void wifiInit(const char *ssid, const char *password);
 #endif

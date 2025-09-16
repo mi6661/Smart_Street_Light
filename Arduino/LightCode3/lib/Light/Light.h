@@ -12,7 +12,9 @@ class Light {
         float humi;
         float temp;
         float lightIntensity;
-        StaticJsonDocument<200> doc;
+        JsonDocument doc;
+
+        SemaphoreHandle_t mutex;
     public:
         //structor
         Light(int id, String location, String status, int brightness, String Auto);
