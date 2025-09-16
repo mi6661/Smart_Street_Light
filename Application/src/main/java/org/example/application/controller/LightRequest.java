@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -61,8 +60,8 @@ public class LightRequest {
     //修改状态
     @PostMapping("/update")
     public ApiResonse<Boolean> updateLight(@RequestBody LightInfo light){
-        System.out.println(light.toString());
-        if(lightService.update(light)){
+        System.out.println("Received: "+light);
+        if(lightService.cacheLightInfo(light)){
             return ApiResonse.success(true);
         }
         return ApiResonse.fail("更新失败");
@@ -79,7 +78,7 @@ public class LightRequest {
     public ApiResonse<Boolean> updateLights(@RequestBody LightSensor info){
         //路灯控制数据信息
         LightInfo light = new LightInfo();
-        light.id = info.id;
+        light._id = info.id;
         light.location = info.location;
         light.status = info.status;
         light.brightness = info.brightness;
@@ -91,7 +90,7 @@ public class LightRequest {
         sensor.humidity = info.humidity;
         sensor.pm24 = -1;//目前硬件还没有pm2.5检测
 
-        if(sensorService.insertData(sensor)){
+        if(sensorService.cacheSensorData(sensor) && lightService.cacheLightInfo(light)){
             return  ApiResonse.success(true);
         }
         return ApiResonse.fail("添加失败");

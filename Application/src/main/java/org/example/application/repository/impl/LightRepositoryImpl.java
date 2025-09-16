@@ -51,7 +51,7 @@ public class LightRepositoryImpl implements LightRepository {
             @Override
             public LightInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 LightInfo lightInfo = new LightInfo();
-                lightInfo.id = rs.getInt(1);
+                lightInfo._id = rs.getInt(1);
                 lightInfo.location = rs.getString(2);
                 lightInfo.status = rs.getString(3);
                 lightInfo.brightness = rs.getInt(4);
@@ -74,7 +74,7 @@ public class LightRepositoryImpl implements LightRepository {
         String sql = "UPDATE street_lights " +
                     "SET location = ?  , status = ? , brightness = ? , auto = ?" +
                     "WHERE _id = ?";
-        return jdbcTemplate.update(sql, new Object[]{lightInfo.location,lightInfo.status,lightInfo.brightness,lightInfo.auto,lightInfo.id});
+        return jdbcTemplate.update(sql, new Object[]{lightInfo.location,lightInfo.status,lightInfo.brightness,lightInfo.auto,lightInfo._id});
     }
 
     @Override

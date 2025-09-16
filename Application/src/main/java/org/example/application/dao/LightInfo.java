@@ -1,7 +1,7 @@
 package org.example.application.dao;
 
 public class LightInfo {
-    public int id;
+    public int _id;
     public String location;
     public String status;
     public int brightness;
@@ -10,7 +10,7 @@ public class LightInfo {
     @Override
     public String toString() {
         return "LightInfo{" +
-                "id=" + id +
+                "id=" + _id +
                 ", location='" + location + '\'' +
                 ", status='" + status + '\'' +
                 ", brightness=" + brightness +

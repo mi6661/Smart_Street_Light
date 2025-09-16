@@ -3,15 +3,8 @@ spring:
     name: Application
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://49.232.141.65:3306/smart_street_lights
-    username: navicat
-    password: asd620510
-  data:
-    redis:
-      port: 6379
-      host: localhost
+    url: jdbc:mysql://101.126.129.202:3306/SmartLight
+    username: root
+    password: Asd620510.
 server:
-  port: 8081
-
-socket:
-  port: 12334
+  port: 8080

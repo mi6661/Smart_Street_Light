@@ -17,9 +17,38 @@ public class SensorService {
     @Autowired
     private SensorRepository sensorRepository;
 
+    //传感器数据缓存
+    List<SensorDao> sensorCache = new ArrayList<>();
 
+    //上传更新信息到数据库
     public boolean insertData(SensorDao dao){
         return sensorRepository.insert(dao);
+    }
+
+    //缓存触感起数据
+    public boolean cacheSensorData(SensorDao dao){
+        if(sensorCache.size() >= 100){
+            //把数据更新到数据库
+            try {
+                for (SensorDao sensorDao : sensorCache) {
+                    sensorRepository.insert(sensorDao);
+                }
+                sensorCache.clear();
+                sensorCache.add(dao);
+                return true;
+            } catch (RuntimeException e) {
+                System.out.println("传感器数据上出数据库失败：" + e.getMessage());
+                return false;
+            }
+        }else {
+            try{
+                sensorCache.add(dao);
+                return true;
+            }catch (Exception e){
+                System.out.println("传感器缓存数据添加失败： "+e.getMessage());
+                return false;
+            }
+        }
     }
 
     //获取所有所有路灯的传感器的所有数据

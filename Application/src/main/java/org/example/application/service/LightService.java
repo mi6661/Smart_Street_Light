@@ -8,10 +8,13 @@ import org.example.application.entity.SensorData;
 import org.example.application.entity.StreetLight;
 import org.example.application.repository.LightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LightService {
@@ -20,14 +23,54 @@ public class LightService {
     private LightRepository lightRepository;
     @Autowired
     private SensorService sensorService;
+
+    //暂存路灯信息
+    Map<Integer,LightInfo> lightInfoMap = new HashMap<>();
+    //定时更新数据库路灯的状态
+    @Scheduled(fixedRate = 5000)
+    public void scheduled(){
+        System.out.println("lightService scheduled:");
+        List<LightInfo> infos = new ArrayList<>(lightInfoMap.values());
+        System.out.println("infos size: " + infos.size());
+        System.out.println("map: " + lightInfoMap);
+        infos.forEach(lightInfo -> {
+            lightRepository.updateLight(lightInfo);
+        });
+    }
+
+
     //返回所以路灯信息
     public List<StreetLight> getAllLights() {
         return lightRepository.getAllLights();
     }
+
     //通过id查询路灯信息
     public LightInfo getLightInfo(int id){
-        return lightRepository.getLightInfo(id);
+        LightInfo lightInfo;
+        if((lightInfo=lightInfoMap.get(id))!=null){
+            return lightInfo;
+        } else {
+            return lightRepository.getLightInfo(id);
+        }
     }
+
+    //暂存路灯状态
+    public boolean cacheLightInfo(LightInfo info){
+        int id = info._id;
+        try{
+            if(lightInfoMap.containsKey(id)){
+                lightInfoMap.replace(id, info);
+            }else {
+                lightInfoMap.put(id, info);
+            }
+            System.out.println("缓存成功："+info.toString());
+            return true;
+        }catch (Exception e){
+            System.out.println("路灯信息暂存失败："+e.getMessage());
+            return false;
+        }
+    }
+
 
     //添加路灯
     public boolean addLight(LightInfo light) {
@@ -42,11 +85,6 @@ public class LightService {
             return lightRepository.updateLight(lightInfo)==1;
         }
         return false;
-    }
-
-    //更新路灯状态
-    public boolean update(LightInfo light){
-        return lightRepository.updateLight(light)==1;
     }
 
     //获取全部与路灯相关联的传感器数据
