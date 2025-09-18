@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: Application
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.126.129.202:3306/SmartLight
+    username: root
+    password: Asd620510.
+server:
+  port: 8080
