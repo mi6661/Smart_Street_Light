@@ -19,6 +19,7 @@ void setup() {
     Serial.println("\n系统初始化开始...");
     //wifi初始化
     wifiInit(ssid, password);
+
     //线程启动
     xTaskCreate(light_task,"lightThread",1024*4,NULL,1,NULL);       //路灯
     xTaskCreate(sensor_task,"sensorThread",1024*4,NULL,1,NULL);     //传感器

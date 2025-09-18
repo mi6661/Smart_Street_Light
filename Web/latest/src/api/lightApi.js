@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// 使用相对路径，Vite代理会自动处理
 const API_BASE_URL = '';
 
 // 获取所有路灯状态
@@ -16,7 +17,6 @@ export const getLightList = async () => {
 // 更新路灯状态
 export const updateLightStatus = async (light) => {
     try {
-        console.log(light);
         const response = await axios.post(`${API_BASE_URL}/light/update`, light);
         return response.data;
     } catch (error) {
