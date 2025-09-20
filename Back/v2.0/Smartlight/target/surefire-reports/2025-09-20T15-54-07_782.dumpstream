@@ -1,0 +1,5 @@
+# Created at 2025-09-20T15:54:19.994
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Users\MI\OneDrive\Desktop\Smart_Street_Light\Back\v2.0\Smartlight\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
