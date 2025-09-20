@@ -28,10 +28,15 @@
                                     路灯状态
                                 </span>
                             </template>
+                            <!--
                             <a-menu-item key="1">option1</a-menu-item>
                             <a-menu-item key="2">option2</a-menu-item>
                             <a-menu-item key="3">option3</a-menu-item>
                             <a-menu-item key="4">option4</a-menu-item>
+                            -->
+                            <a-menu-item v-for="district in districts" :key="district" @click.stop="ClickItem(district)">{{ district }}</a-menu-item>
+
+
                         </a-sub-menu>
                         <a-sub-menu key="sub2">
                             <template #title>
@@ -57,13 +62,13 @@
                             <a-menu-item key="11">option11</a-menu-item>
                             <a-menu-item key="12">option12</a-menu-item>
                         </a-sub-menu>
+
                     </a-menu>
                 </a-layout-sider>
                     
 
                 <!-- 内容区域 -->
                 <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-
                     <div class="content-body">
                         <LightCard
                         v-for="light in lights"
@@ -71,12 +76,7 @@
                         :light="light"
                         @update-light="handleUpdateLight"/>
                     </div>
-                    
                 </a-layout-content>
-
-
-
-
             </a-layout>
         </a-layout-content>
         <a-layout-footer style="text-align: center">
@@ -87,9 +87,9 @@
 
 
 <script lang="ts" setup>
-import { ref,onMounted } from 'vue';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
-import { getLightList, updateLightStatus } from '../api/lightApi';
+import {onMounted, ref} from 'vue';
+import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons-vue';
+import {getDistricts, getLightList, updateLightStatus} from '../api/lightApi';
 import LightCard from '../components/LightCard.vue'
 
 const selectedKeys1 = ref<string[]>(['2']);
@@ -100,6 +100,8 @@ const openKeys = ref<string[]>(['sub1']);
 
 /**路灯状态信息列表 */
 const lights = ref([]);
+/**地区列表*/
+const districts = ref([]);
 
 /**获取路灯信息 */
 const fetchLights = async () => {
@@ -114,6 +116,17 @@ const fetchLights = async () => {
         // 错误处理已在 lightApi.js 中
     }
 };
+
+
+/**获取地区列表*/
+const fetchDistricts = async () => {
+    try{
+        districts.value = await getDistricts();
+    }catch(error){
+        console.error('获取地区列表失败:', error);
+    }
+
+}
 
 /**上传路灯状态更新 */
 const handleUpdateLight = async (updatedLight) => {
@@ -134,9 +147,16 @@ const handleUpdateLight = async (updatedLight) => {
     }
 };
 
+
+/**边栏item点击事件处理*/
+const ClickItem = (item)=>{
+    console.log('item:',item);
+}
+
 //挂载时
 onMounted(() => {
     fetchLights();
+    fetchDistricts();
 });
 
 
@@ -150,7 +170,10 @@ onMounted(() => {
 
 <style scoped>
 .content-body{
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 </style>

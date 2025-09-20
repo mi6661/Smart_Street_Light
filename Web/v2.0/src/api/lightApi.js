@@ -35,3 +35,14 @@ export const getSensorDataById = async (id) => {
         throw error;
     }
 };
+
+
+//获取路灯所在的地区
+export const getDistricts = async () => {
+    try{
+        const response = await axios.get(`${API_BASE_URL}/light/districts`);
+        return response.data;
+    }catch(error){
+        console.error('获取地区列表失败:', error);
+    }
+}

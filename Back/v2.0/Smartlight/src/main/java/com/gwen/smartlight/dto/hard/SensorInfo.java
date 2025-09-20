@@ -1,4 +1,4 @@
-package com.gwen.smartlight.dto;
+package com.gwen.smartlight.dto.hard;
 
 import lombok.Data;
 
