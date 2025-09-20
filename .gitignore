@@ -9,3 +9,6 @@
 node_modules/
 Arduino/LightCode3/.DS_Store
 .vscode
+
+*.class
+Android/.DS_Store
