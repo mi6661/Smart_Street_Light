@@ -1,7 +1,7 @@
 package com.gwen.smartlight.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.gwen.smartlight.dto.SensorInfo;
+import com.gwen.smartlight.dto.hard.SensorInfo;
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
 import com.gwen.smartlight.entity.Sensor;
 import com.gwen.smartlight.mapper.SensorMapper;

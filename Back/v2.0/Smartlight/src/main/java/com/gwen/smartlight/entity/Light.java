@@ -9,6 +9,8 @@ import java.sql.Date;
 public class Light {
     //路灯id
     public int id;
+    //地区
+    public String district;
     //路灯位置
     public String location;
     //路灯状态

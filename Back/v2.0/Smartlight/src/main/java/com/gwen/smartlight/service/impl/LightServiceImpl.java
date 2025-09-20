@@ -1,8 +1,9 @@
 package com.gwen.smartlight.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.gwen.smartlight.dto.LightStatus;
+import com.gwen.smartlight.dto.hard.LightStatus;
 import com.gwen.smartlight.dto.web.LightInfo;
+import com.gwen.smartlight.dto.web.LightStatusPage;
 import com.gwen.smartlight.entity.Light;
 import com.gwen.smartlight.mapper.LightMapper;
 import com.gwen.smartlight.service.LightService;
@@ -49,5 +50,15 @@ public class LightServiceImpl implements LightService {
             infos.add(info);
         });
         return infos;
+    }
+
+    @Override
+    public List<String> getDistricts() {
+        List<Light> districts = lightMapper.selectList(new QueryWrapper<Light>().select("distinct district"));
+        List<String> lists_district = new ArrayList<>();
+        districts.forEach(district->{
+            lists_district.add(district.getDistrict());
+        });
+        return lists_district;
     }
 }

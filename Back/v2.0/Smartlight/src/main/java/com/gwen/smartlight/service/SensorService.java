@@ -1,6 +1,6 @@
 package com.gwen.smartlight.service;
 
-import com.gwen.smartlight.dto.SensorInfo;
+import com.gwen.smartlight.dto.hard.SensorInfo;
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
 
 import java.util.List;

@@ -3,8 +3,8 @@ package com.gwen.smartlight.controller;
 * 开发板访问接口
 * */
 
-import com.gwen.smartlight.dto.LightStatus;
-import com.gwen.smartlight.dto.SensorInfo;
+import com.gwen.smartlight.dto.hard.LightStatus;
+import com.gwen.smartlight.dto.hard.SensorInfo;
 import com.gwen.smartlight.mapper.SensorMapper;
 import com.gwen.smartlight.service.LightService;
 import com.gwen.smartlight.service.SensorService;
