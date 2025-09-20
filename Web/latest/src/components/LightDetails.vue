@@ -6,11 +6,12 @@
     <div v-else class="data-display">
       <h2>路灯 {{ id }} 的传感器数据</h2>
       <div class="data-list">
-        <div v-for="data in sensorData" :key="data._id" class="data-item">
+        <div v-for="data in sensorData" :key="data.id" class="data-item">
           <p><strong>时间:</strong> {{ formatDate(data.create_time) }}</p>
           <p><strong>温度:</strong> {{ data.temperature }} °C</p>
           <p><strong>湿度:</strong> {{ data.humidity }} %</p>
-          <p><strong>PM2.5:</strong> {{ data.pm24 !== -1 ? data.pm24 : '无数据' }}</p>
+          <p><strong>风速:</strong> {{ data.wind_speed }} %</p>
+          <p><strong>PM2.5:</strong> {{ data.pm25 !== -1 ? data.pm25 : '无数据' }}</p>
         </div>
       </div>
     </div>
@@ -38,13 +39,15 @@ const error = ref(null);
 // 获取传感器数据
 const fetchSensorData = async () => {
   try {
-    const response = await axios.post(`http://localhost:8080/sensor/id?id=${props.id}`);
-    if (response.data && response.data.status === 200) {
-      sensorData.value = response.data.data;
+    //查询10条记录
+    const response = await axios.get(`http://localhost:8080/sensor/list?id=${props.id}&amount=10`);
+    if (response.data && response.status === 200) {
+      sensorData.value = response.data;
       if (!sensorData.value || sensorData.value.length === 0) {
         error.value = '未找到相关传感器数据。';
       }
     } else {
+      console.log(response);
       error.value = '获取数据失败。';
     }
   } catch (err) {
@@ -105,30 +108,4 @@ onMounted(() => {
   border-bottom: 1px solid #eee;
   padding-bottom: 15px;
 }
-</style>
----
-## 5. 修改 `LightCard.vue`
-在 `LightCard.vue` 中，我们需要将卡片变成可点击的，并使用 `router.push` 方法导航到详情页。
-
-**src/components/LightCard.vue (修改后)**
-```vue
-
----
-## 6. 修改 `App.vue`
-`App.vue` 需要移除 `LightCard` 组件，并用 `router-view` 替换。`router-view` 是 Vue Router 提供的组件，用于显示当前路由匹配到的组件。
-
-**src/App.vue (修改后)**
-```vue
-<template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
-</template>
-
-<script setup>
-// 这部分代码移动到 router/index.js 和新的组件中
-</script>
-
-<style>
-/* ... 保持不变 ... */
 </style>

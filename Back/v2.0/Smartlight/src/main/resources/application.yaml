@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Smartlight
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.126.129.202:3306/SmartLight
+    username: root
+    password: Asd620510.
+server:
+  port: 8080
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml  # 可选，若只用注解可省略
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL日志

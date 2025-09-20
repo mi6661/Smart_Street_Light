@@ -6,7 +6,7 @@ const API_BASE_URL = '';
 // 获取所有路灯状态
 export const getLightList = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/light/list`);
+        const response = await axios.get(`${API_BASE_URL}/light/all`);
         return response.data;
     } catch (error) {
         console.error('获取路灯列表失败:', error);

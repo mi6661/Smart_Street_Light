@@ -1,0 +1,11 @@
+package com.gwen.smartlight.service;
+
+import com.gwen.smartlight.dto.SensorInfo;
+import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
+
+import java.util.List;
+
+public interface SensorService {
+    boolean HardDataUpdate(SensorInfo sensorInfo);
+    List<SensorDataOnDetailCard> getSensorDataListOnDetailCardsById(int id,int amount);
+}
