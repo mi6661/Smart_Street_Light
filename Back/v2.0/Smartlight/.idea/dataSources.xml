@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="volcanicCloud" uuid="ceecf207-fef8-401c-92ce-487a00b7d520">
+    <data-source source="LOCAL" name="SmartLight" uuid="ceecf207-fef8-401c-92ce-487a00b7d520">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <remarks>路灯服务端数据库</remarks>
