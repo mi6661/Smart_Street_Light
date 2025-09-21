@@ -38,13 +38,14 @@
 import { defineProps, defineEmits, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
+/*定义组件需要的数据*/
 const props = defineProps({
   light: {
     type: Object,
     required: true
   }
 });
-
+/*组件可触发事件*/
 const emit = defineEmits(['update-light']);
 const router = useRouter();
 
@@ -77,6 +78,7 @@ const toggleStatus = () => {
   const newStatus = props.light.status === 'on' ? 'off' : 'on';
   sendUpdate({ status: newStatus });
 };
+
 /*更新路灯的亮度*/
 const updateBrightness = () => {
   sendUpdate({ brightness: localBrightness.value });
