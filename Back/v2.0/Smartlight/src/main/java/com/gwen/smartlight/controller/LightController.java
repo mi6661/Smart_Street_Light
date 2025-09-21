@@ -5,9 +5,7 @@ import com.gwen.smartlight.dto.web.LightStatusPage;
 import com.gwen.smartlight.entity.Light;
 import com.gwen.smartlight.service.LightService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,13 @@ public class LightController {
     public List<String> getLightsStatusGroupByDistrict() {
 
         return lightService.getDistricts();
+    }
+
+    /*
+    * 更新路灯状态
+    * */
+    @PostMapping("/update")
+    public boolean updateLight(@RequestBody LightInfo info) {
+        return lightService.updateLight(info);
     }
 }

@@ -132,11 +132,11 @@ const fetchDistricts = async () => {
 const handleUpdateLight = async (updatedLight) => {
     try {
         const response = await updateLightStatus(updatedLight);
-
-        if (response && response.status === 200) {
-            const index = lights.value.findIndex(light => light._id === updatedLight.id);
+        console.log(response);
+        if (response) {
+            const index = lights.value.findIndex(light => light.id === updatedLight.id);
             if (index !== -1) {
-                lights.value[index] = { ...updatedLight, _id: updatedLight.id };
+                lights.value[index] = { ...updatedLight, id: updatedLight.id };
             }
             console.log('路灯状态更新成功');
         } else {
@@ -150,7 +150,9 @@ const handleUpdateLight = async (updatedLight) => {
 
 /**边栏item点击事件处理*/
 const ClickItem = (item)=>{
-    console.log('item:',item);
+    if(item == "东城区"){
+
+    }
 }
 
 //挂载时

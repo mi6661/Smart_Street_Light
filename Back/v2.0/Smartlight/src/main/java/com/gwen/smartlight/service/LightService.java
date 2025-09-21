@@ -10,4 +10,5 @@ public interface LightService {
     LightStatus getLightStatusById(int id);
     List<LightInfo> getLightInfos();
     List<String> getDistricts();
+    boolean updateLight(LightInfo info);
 }

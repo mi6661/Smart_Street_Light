@@ -1,6 +1,7 @@
 package com.gwen.smartlight.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.gwen.smartlight.dto.hard.LightStatus;
 import com.gwen.smartlight.dto.web.LightInfo;
 import com.gwen.smartlight.dto.web.LightStatusPage;
@@ -60,5 +61,22 @@ public class LightServiceImpl implements LightService {
             lists_district.add(district.getDistrict());
         });
         return lists_district;
+    }
+
+    @Override
+    public boolean updateLight(LightInfo info) {
+        try {
+            UpdateWrapper<Light> updateWrapper = new UpdateWrapper<Light>();
+            updateWrapper.eq("id", info.getId());
+            updateWrapper.set("location", info.getLocation());
+            updateWrapper.set("status", info.getStatus());
+            updateWrapper.set("brightness", info.getBrightness());
+            updateWrapper.set("auto", info.getAuto());
+            lightMapper.update(updateWrapper);
+            return true;
+        } catch (RuntimeException e) {
+            System.err.println("路灯信息更新失败："+e.getMessage());
+            return false;
+        }
     }
 }
