@@ -47,3 +47,14 @@ export const getDistricts = async () => {
         console.error('获取地区列表失败:', error);
     }
 }
+
+//获取地区内的所有路灯状态
+export const getLightStatusByDistrict = async (district) => {
+    try{
+        const response = await axios.get(`${API_BASE_URL}/light/lights_district?district=${district}`);
+        console.log("district:"+district);
+        return response.data;
+    }catch(error){
+        console.error(`获取${district}内的路灯状态失败:`, error);
+    }
+}

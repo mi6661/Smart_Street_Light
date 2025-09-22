@@ -11,4 +11,5 @@ public interface LightService {
     List<LightInfo> getLightInfos();
     List<String> getDistricts();
     boolean updateLight(LightInfo info);
+    List<LightInfo> getLightStatusByDistrict(String district);
 }

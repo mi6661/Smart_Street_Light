@@ -40,17 +40,7 @@ public class LightServiceImpl implements LightService {
     @Override
     public List<LightInfo> getLightInfos() {
         List<Light> lights = lightMapper.selectList(new QueryWrapper<Light>().orderByAsc("id"));
-        List<LightInfo> infos = new ArrayList<LightInfo>();
-        lights.forEach(light->{
-            LightInfo info = new LightInfo();
-            info.setId(light.getId());
-            info.setLocation(light.getLocation());
-            info.setStatus(light.getStatus());
-            info.setBrightness(light.getBrightness());
-            info.setAuto(light.getAuto());
-            infos.add(info);
-        });
-        return infos;
+        return getLightInfos(lights);
     }
 
     @Override
@@ -78,5 +68,39 @@ public class LightServiceImpl implements LightService {
             System.err.println("路灯信息更新失败："+e.getMessage());
             return false;
         }
+    }
+
+
+    /**
+     * @param district:地区名
+     * @return List<LightInfo>: 符合条件的路灯信息集合
+     * */
+    @Override
+    public List<LightInfo> getLightStatusByDistrict(String district) {
+
+        QueryWrapper<Light> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("district", district);
+        List<Light> lights = lightMapper.selectList(queryWrapper);
+
+        return getLightInfos(lights);
+    }
+
+
+
+    /**
+     * 从Light列表 中提取出 LightInfo列表
+     * */
+    private List<LightInfo> getLightInfos(List<Light> lights) {
+        List<LightInfo> infos = new ArrayList<>();
+        lights.forEach(light->{
+            LightInfo info = new LightInfo();
+            info.setId(light.getId());
+            info.setLocation(light.getLocation());
+            info.setStatus(light.getStatus());
+            info.setBrightness(light.getBrightness());
+            info.setAuto(light.getAuto());
+            infos.add(info);
+        });
+        return infos;
     }
 }

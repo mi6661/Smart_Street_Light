@@ -23,11 +23,11 @@ public class LightController {
     }
 
     /*
-    * 获取路灯状态，通过地区分组
+    * 获取所有地区名
+    *
     * */
     @GetMapping("/districts")
     public List<String> getLightsStatusGroupByDistrict() {
-
         return lightService.getDistricts();
     }
 
@@ -37,5 +37,12 @@ public class LightController {
     @PostMapping("/update")
     public boolean updateLight(@RequestBody LightInfo info) {
         return lightService.updateLight(info);
+    }
+
+
+    /*通过地区名，获取路灯的状态集合*/
+    @GetMapping("/lights_district")
+    public List<LightInfo> getLightStatusByDistrict(@RequestParam String district){
+        return lightService.getLightStatusByDistrict(district);
     }
 }

@@ -14,3 +14,6 @@
   margin-top: 60px;
 }
 </style>
+<script setup lang="ts">
+import CharCard from "./components/CharCard.vue";
+</script>
