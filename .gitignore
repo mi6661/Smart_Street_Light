@@ -12,3 +12,61 @@ Arduino/LightCode3/.DS_Store
 
 *.class
 Android/.DS_Store
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+/out/
+/target/
+.gradle/
+build/
+/gradlew
+/gradlew.bat
+
+# Spring Boot
+/target/
+/build/
+*.jar
+*.war
+*.zip
+*.tar.gz
+/temp/
+!/src/main/resources/
+!/src/main/resources/*.properties
+!/src/main/resources/*.yml
+
+# WebStorm / Vue 3 / Vite
+.idea/
+.DS_Store
+node_modules/
+/dist/
+/temp/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/coverage/
+/public/
+.output/
+.nuxt/
+
+# VS Code
+.vscode/
+.history/
+*.log
+*.bak
+*.swp
+*.swo
+
+# ESP32 specific
+/build/
+/bootloader/
+/flasher_args.json
+/sdkconfig
+/sdkconfig.old
+/partitions_singleapp.bin
+
+# macOS / Windows specific
+.DS_Store
+Thumbs.db
