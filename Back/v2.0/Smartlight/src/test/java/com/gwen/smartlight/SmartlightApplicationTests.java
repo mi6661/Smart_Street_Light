@@ -16,10 +16,13 @@ class SmartlightApplicationTests {
     @Autowired
     private LightMapper lightMapper;
 
+    @Autowired
+    private SensorService sensorService;
+
     @Test
     void contextLoads() {
-        Light light = lightMapper.selectById(1);
-        System.out.println(light.getLocation());
+        List<SensorsTempNow> sensorDataNowById = sensorService.getSensorDataNowById();
+        System.out.println(sensorDataNowById);
     }
 
 }
