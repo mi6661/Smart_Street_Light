@@ -9,13 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SmartlightApplicationTests {
 
-    @Autowired
-    private LightMapper lightMapper;
 
-    @Test
-    void contextLoads() {
-        Light light = lightMapper.selectById(1);
-        System.out.println(light.getLocation());
-    }
 
 }
