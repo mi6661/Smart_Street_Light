@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <!--<router-view></router-view>-->
+    <RealDataCard></RealDataCard>
   </div>
 </template>
 
@@ -15,5 +16,5 @@
 }
 </style>
 <script setup lang="ts">
-import CharCard from "./components/CharCard.vue";
+import RealDataCard from "./components/RealDataCard.vue";
 </script>

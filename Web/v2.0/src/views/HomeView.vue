@@ -74,7 +74,7 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons-vue';
-import {getDistricts, getLightList, updateLightStatus,getLightStatusByDistrict} from '../api/lightApi';
+import {getDistricts} from '../api/lightApi';
 import {useRouter} from 'vue-router';
 
 const selectedKeys1 = ref<string[]>(['2']);
@@ -87,6 +87,8 @@ const router = useRouter();
 const districts = ref([]);
 
 
+
+
 /**获取地区列表*/
 const fetchDistricts = async () => {
     try{
@@ -94,31 +96,25 @@ const fetchDistricts = async () => {
     }catch(error){
         console.error('获取地区列表失败:', error);
     }
-
 }
-
-
 
 
 
 /**边栏"路灯状态"点击事件处理*/
 const ClickLightStatus = (item)=>{
-    console.log("跳转到："+item);
     router.push({name: 'LightsStatus', params: {district: item}});
 }
 
 const ClickEnviDataTemp = (choices)=>{
     if(choices == "realtime"){
-        console.log("realtime")
-        router.push({name: 'RealTimeView', params: {choice: choices}});
+        router.push({name: 'RealTimeView'});
     }
     if(choices == "statistics"){
-        console.log("statistics")
-        router.push({name: 'StatisticsView', params: {choice: choices}});
+        router.push({name: 'StatisticsView'});
     }
 }
 
-//挂载时
+//周期函数
 onMounted(() => {
     fetchDistricts();
 });
