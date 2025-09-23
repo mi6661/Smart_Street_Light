@@ -13,4 +13,20 @@ public class LightStatus {
     int status;
     /*路灯是否自动*/
     int auto;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getAuto() {
+        return auto;
+    }
+
+    public void setAuto(int auto) {
+        this.auto = auto;
+    }
 }
