@@ -58,3 +58,14 @@ export const getLightStatusByDistrict = async (district) => {
         console.error(`获取${district}内的路灯状态失败:`, error);
     }
 }
+
+
+/*获取所有路灯最新温度数据*/
+
+export const updateDistrict = async () => {
+    try{
+        const response = await axios.get(`${API_BASE_URL}/sensor/light_temp_now`);
+    }catch(error){
+        console.error('<UNK>:', error);
+    }
+}

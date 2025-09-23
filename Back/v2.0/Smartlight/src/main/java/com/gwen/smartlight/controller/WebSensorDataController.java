@@ -1,6 +1,7 @@
 package com.gwen.smartlight.controller;
 
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
+import com.gwen.smartlight.dto.web.SensorsTempNow;
 import com.gwen.smartlight.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,12 @@ public class WebSensorDataController {
         }else{
             return sensorService.getSensorDataListOnDetailCardsById(id,100);
         }
+    }
+
+
+    @GetMapping("light_temp_now")
+    List<SensorsTempNow> getSensorsTempList(){
+        return sensorService.getSensorDataNowById();
     }
 
 }
