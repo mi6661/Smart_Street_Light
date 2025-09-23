@@ -22,7 +22,6 @@ public class FallbackController {
             return null;
         }
 
-
         // 所有其他路径都转发到 index.html
         return "forward:/index.html";
     }
