@@ -8,6 +8,7 @@
 <script setup>
 import {defineProps, onMounted, watch , ref} from "vue";
 import { Chart } from '@antv/g2';
+import {getSensorDataListNow} from "../../api/lightApi.js";
 
 const props = defineProps({
     choice: {
@@ -21,59 +22,23 @@ watch(()=>props.choice, (newVal,oldVal)=>{
 },{immediate: true})
 
 
-
 //标签容器
 const container = ref(null);
 // 准备数据
-const data = [
-    { year: '1991', value: 15468 },
-    { year: '1992', value: 16100 },
-    { year: '1993', value: 15900 },
-    { year: '1994', value: 17409 },
-    { year: '1995', value: 17000 },
-    { year: '1996', value: 31056 },
-    { year: '1997', value: 31982 },
-    { year: '1998', value: 32040 },
-    { year: '1999', value: 33233 },
-];
-
 const tempData = ref();
 
-const monthlyTemperatureData = [
-    { light: '1', temp: 18 },
-    { light: '2', temp: 19 },
-    { light: '3日', temp: 20 },
-    { light: '4日', temp: 21 },
-    { light: '5日', temp: 22 },
-    { light: '6日', temp: 21 },
-    { light: '7日', temp: 20 },
-    { light: '8日', temp: 22 },
-    { light: '9日', temp: 23 },
-    { light: '10日', temp: 24 },
-    { light: '11日', temp: 25 },
-    { light: '12日', temp: 26 },
-    { light: '13日', temp: 27 },
-    { light: '14日', temp: 28 },
-    { light: '15日', temp: 29 },
-    { light: '16日', temp: 28 },
-    { light: '17日', temp: 27 },
-    { light: '18日', temp: 26 },
-    { light: '19日', temp: 25 },
-    { light: '20日', temp: 24 },
-    { light: '21日', temp: 23 },
-    { light: '22日', temp: 22 },
-    { light: '23日', temp: 21 },
-    { light: '24日', temp: 20 },
-    { light: '25日', temp: 19 },
-    { light: '26日', temp: 18 },
-    { light: '27日', temp: 17 },
-    { light: '28日', temp: 16 },
-    { light: '29日', temp: 15 },
-    { light: '30日', temp: 14 }
-];
+watch(tempData, (newVal,oldVal)=>{
+
+
+
+    //绘制图表
+    //renderBarChart(container.value,newVal);
+
+},{immediate: true})
+
 
 //图标初始化
-function renderBarChart(container) {
+function renderBarChart(container,tp) {
     const chart = new Chart({
         container,
         autoFit: true,
@@ -81,16 +46,17 @@ function renderBarChart(container) {
 
 
     // 出入数据
-    chart.data(monthlyTemperatureData) // 绑定数据
+
 
     chart
-        .area()
-        .encode('x', (d) => d.light)
-        .encode('y', 'temp')
-        .encode('shape', 'area') // 'area', 'smooth', 'hvh', 'vh', 'hv'
+        .interval()
+        .data(tp) // 绑定数据
+        .encode('x', (d) => "hello world this is a id"+d.id)
+        .encode('y', 'temperature')
+/*        .encode('shape', 'area') // 'area', 'smooth', 'hvh', 'vh', 'hv'
         .style('opacity', 0.2)
         .axis('y', { labelFormatter: '~s', title: false })
-        .animate('update', { duration: 300 }); // 指定更新动画的时间
+        .animate('update', { duration: 300 }); // 指定更新动画的时间*/
 
     // 渲染可视化
     chart.render();
@@ -99,8 +65,15 @@ function renderBarChart(container) {
 }
 
 onMounted(() => {
-    renderBarChart(container.value);
+    //从后端获取数据呀
+    const my_promise = getSensorDataListNow();
+    my_promise.then((result) => {
+        renderBarChart(container.value, result);
+    })
+
 })
+
+
 
 
 </script>

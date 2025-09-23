@@ -62,10 +62,13 @@ export const getLightStatusByDistrict = async (district) => {
 
 /*获取所有路灯最新温度数据*/
 
-export const updateDistrict = async () => {
+export const getSensorDataListNow = async () => {
     try{
         const response = await axios.get(`${API_BASE_URL}/sensor/light_temp_now`);
+        console.log("获取到数据：");
+        console.log(response.data);//list
+        return response.data;
     }catch(error){
-        console.error('<UNK>:', error);
+        console.error('所有路灯最新数据失败:', error);
     }
 }

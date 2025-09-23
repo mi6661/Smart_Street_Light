@@ -39,9 +39,8 @@
                                     环境数据
                                 </span>
                             </template>
-                            <a-menu-item key="temp" @click.stop="ClickEnviDataTemp('temp')">温度</a-menu-item>
-                            <a-menu-item key="humid" @click.stop="ClickEnviDataTemp('humid')">湿度</a-menu-item>
-                            <a-menu-item key="wind_speed" @click.stop="ClickEnviDataTemp('wind_speed')">风速</a-menu-item>
+                            <a-menu-item key="realtime" @click.stop="ClickEnviDataTemp('realtime')">实时监测</a-menu-item>
+                            <a-menu-item key="statistics" @click.stop="ClickEnviDataTemp('statistics')">数据统计</a-menu-item>
                         </a-sub-menu>
                         <a-sub-menu key="sub3">
                             <template #title>
@@ -109,7 +108,14 @@ const ClickLightStatus = (item)=>{
 }
 
 const ClickEnviDataTemp = (choices)=>{
-    router.push({name: 'SensorDataView', params: {choice: choices}});
+    if(choices == "realtime"){
+        console.log("realtime")
+        router.push({name: 'RealTimeView', params: {choice: choices}});
+    }
+    if(choices == "statistics"){
+        console.log("statistics")
+        router.push({name: 'StatisticsView', params: {choice: choices}});
+    }
 }
 
 //挂载时
