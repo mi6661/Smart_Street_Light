@@ -6,4 +6,7 @@
 
 <mapper namespace="com.gwen.smartlight.mapper.LightMapper">
 
+    <select id="getLightId" resultType="java.lang.Integer">
+        SELECT DISTINCT light_id from sensor
+    </select>
 </mapper>

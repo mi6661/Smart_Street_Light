@@ -85,7 +85,7 @@ public class LightServiceImpl implements LightService {
         return getLightInfos(lights);
     }
 
-    
+
     /**
      * 从Light列表 中提取出 LightInfo列表
      * */

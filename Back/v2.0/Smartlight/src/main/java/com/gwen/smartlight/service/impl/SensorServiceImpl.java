@@ -2,8 +2,10 @@ package com.gwen.smartlight.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gwen.smartlight.dto.hard.SensorInfo;
+import com.gwen.smartlight.dto.web.SensorsTempNow;
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
 import com.gwen.smartlight.entity.Sensor;
+import com.gwen.smartlight.mapper.LightMapper;
 import com.gwen.smartlight.mapper.SensorMapper;
 import com.gwen.smartlight.service.SensorService;
 import com.gwen.smartlight.utils.DateTools;
@@ -19,6 +21,9 @@ public class SensorServiceImpl implements SensorService {
 
     @Autowired
     private SensorMapper sensorMapper;
+    @Autowired
+    private LightMapper lightMapper;
+
 
     //更新硬件上传的数据
     @Override
@@ -59,6 +64,33 @@ public class SensorServiceImpl implements SensorService {
         });
 
         return sensorDataOnDetailCards;
+    }
+
+    @Override
+    public List<SensorsTempNow> getSensorDataNowById() {
+
+
+        List<Integer> lightIdList = lightMapper.getLightId();
+
+        //用于储存返回数据
+        List<SensorsTempNow> data = new ArrayList<>();
+
+        lightIdList.forEach((lightId)->{
+            //查询该路灯的最新数据
+            QueryWrapper<Sensor> temperatureWrapper = new QueryWrapper<>();
+            temperatureWrapper.eq("light_id", lightId);
+            temperatureWrapper.orderByDesc("create_time");
+            temperatureWrapper.last("limit 1");//只需要最新数据即可
+            List<Sensor> temperatureList = sensorMapper.selectList(temperatureWrapper);
+
+            SensorsTempNow sensorDataNow = new SensorsTempNow();
+            sensorDataNow.setId(temperatureList.get(0).getId());
+            sensorDataNow.setTemperature(temperatureList.get(0).getTemperature());
+
+            data.add(sensorDataNow);
+        });
+
+        return data;
     }
 
 

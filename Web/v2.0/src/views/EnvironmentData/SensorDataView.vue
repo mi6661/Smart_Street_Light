@@ -37,37 +37,39 @@ const data = [
     { year: '1999', value: 33233 },
 ];
 
+const tempData = ref();
+
 const monthlyTemperatureData = [
-    { day: '1日', temp: 18 },
-    { day: '2日', temp: 19 },
-    { day: '3日', temp: 20 },
-    { day: '4日', temp: 21 },
-    { day: '5日', temp: 22 },
-    { day: '6日', temp: 21 },
-    { day: '7日', temp: 20 },
-    { day: '8日', temp: 22 },
-    { day: '9日', temp: 23 },
-    { day: '10日', temp: 24 },
-    { day: '11日', temp: 25 },
-    { day: '12日', temp: 26 },
-    { day: '13日', temp: 27 },
-    { day: '14日', temp: 28 },
-    { day: '15日', temp: 29 },
-    { day: '16日', temp: 28 },
-    { day: '17日', temp: 27 },
-    { day: '18日', temp: 26 },
-    { day: '19日', temp: 25 },
-    { day: '20日', temp: 24 },
-    { day: '21日', temp: 23 },
-    { day: '22日', temp: 22 },
-    { day: '23日', temp: 21 },
-    { day: '24日', temp: 20 },
-    { day: '25日', temp: 19 },
-    { day: '26日', temp: 18 },
-    { day: '27日', temp: 17 },
-    { day: '28日', temp: 16 },
-    { day: '29日', temp: 15 },
-    { day: '30日', temp: 14 }
+    { light: '1', temp: 18 },
+    { light: '2', temp: 19 },
+    { light: '3日', temp: 20 },
+    { light: '4日', temp: 21 },
+    { light: '5日', temp: 22 },
+    { light: '6日', temp: 21 },
+    { light: '7日', temp: 20 },
+    { light: '8日', temp: 22 },
+    { light: '9日', temp: 23 },
+    { light: '10日', temp: 24 },
+    { light: '11日', temp: 25 },
+    { light: '12日', temp: 26 },
+    { light: '13日', temp: 27 },
+    { light: '14日', temp: 28 },
+    { light: '15日', temp: 29 },
+    { light: '16日', temp: 28 },
+    { light: '17日', temp: 27 },
+    { light: '18日', temp: 26 },
+    { light: '19日', temp: 25 },
+    { light: '20日', temp: 24 },
+    { light: '21日', temp: 23 },
+    { light: '22日', temp: 22 },
+    { light: '23日', temp: 21 },
+    { light: '24日', temp: 20 },
+    { light: '25日', temp: 19 },
+    { light: '26日', temp: 18 },
+    { light: '27日', temp: 17 },
+    { light: '28日', temp: 16 },
+    { light: '29日', temp: 15 },
+    { light: '30日', temp: 14 }
 ];
 
 //图标初始化
@@ -83,7 +85,7 @@ function renderBarChart(container) {
 
     chart
         .area()
-        .encode('x', (d) => d.day)
+        .encode('x', (d) => d.light)
         .encode('y', 'temp')
         .encode('shape', 'area') // 'area', 'smooth', 'hvh', 'vh', 'hv'
         .style('opacity', 0.2)
