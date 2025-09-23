@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue';
 import LightDetails from '../components/LightDetails.vue';
 import LightStatusView from "../views/LightStatus/LightStatusView.vue";
 import SensorDataView from '../views/EnvironmentData/SensorDataView.vue';
+import RealtimeDataView from "../views/EnvironmentData/RealtimeDataView.vue";
+import StatisticsView from "../views/EnvironmentData/StatisticsDataView.vue";
 
 /*路由规则*/
 const routes = [
@@ -21,6 +23,18 @@ const routes = [
                 path: '/sensors/:choice',
                 name: 'SensorDataView',
                 component: SensorDataView,
+                props: true
+            },
+            {
+                path: '/sensor/realtime',
+                name: 'RealTimeView',
+                component: RealtimeDataView,
+                props: true
+            },
+            {
+                path: '/sensor/statistics',
+                name: 'StatisticsView',
+                component: StatisticsView,
                 props: true
             }
         ]

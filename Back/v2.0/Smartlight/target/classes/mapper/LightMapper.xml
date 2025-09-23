@@ -9,4 +9,5 @@
     <select id="getLightId" resultType="java.lang.Integer">
         SELECT DISTINCT light_id from sensor
     </select>
+
 </mapper>
