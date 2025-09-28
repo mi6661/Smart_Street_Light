@@ -1,6 +1,7 @@
 package com.gwen.smartlight.service;
 
 import com.gwen.smartlight.dto.hard.SensorInfo;
+import com.gwen.smartlight.dto.web.SensorRealTimeData;
 import com.gwen.smartlight.dto.web.SensorsTempNow;
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
 
@@ -12,4 +13,6 @@ public interface SensorService {
 
 
     List<SensorsTempNow> getSensorDataNowById();
+    /*获取所有路灯传感器的实时数据*/
+    List<SensorRealTimeData> getAllSensorRealTimeData();
 }

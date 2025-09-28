@@ -10,9 +10,20 @@ import { Chart } from '@antv/g2';
 import {getSensorDataListNow} from "../api/lightApi.js";
 
 const location = '呈贡区一路1号'
-const temp_data = ref();
-const humid_data = ref();
-const speed_data = ref();
+const props = defineProps({
+    temperature: {
+        type: Number,
+        required: true
+    },
+    humidity: {
+        type: Number,
+        required: true
+    },
+    speed: {
+        type: Number,
+        required: true
+    }
+})
 
 // 1. 声明一个 ref，并将其与模板中的 div 绑定
 const container = ref(null);
@@ -27,7 +38,7 @@ const make_chart = ()=>{
     chart = new Chart({
       container: container.value
     });
-
+    chart.changeSize(300,100)
     // // 4. 将所有与 DOM 相关的操作移动到这里
     // const button = document.createElement('button');
     // button.innerText = 'Update Data';
@@ -43,9 +54,9 @@ const make_chart = ()=>{
     const view = chart
         .facetRect()
         .data([
-          { name: '温度', percent: 27, color: 'rgba(90, 132, 226, 1)' },
-          { name: '湿度', percent: 81, color: 'rgba(250, 57, 57, 1)' },
-          { name: '风速', percent: 68, color: 'rgba(253, 192, 45, 1)' },
+          { name: '温度', percent: props.temperature, color: 'rgba(90, 132, 226, 1)' },
+          { name: '湿度', percent: props.humidity, color: 'rgba(250, 57, 57, 1)' },
+          { name: '风速', percent: props.speed, color: 'rgba(253, 192, 45, 1)' },
         ])
         .encode('x', 'name')
         .axis(false)
@@ -92,7 +103,7 @@ const make_chart = ()=>{
 
 
     chart.render();
-    chart.changeSize(300,100)
+
   }
 }
 const load_data = () => {

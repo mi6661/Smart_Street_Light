@@ -2,6 +2,7 @@ package com.gwen.smartlight.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gwen.smartlight.dto.hard.SensorInfo;
+import com.gwen.smartlight.dto.web.SensorRealTimeData;
 import com.gwen.smartlight.dto.web.SensorsTempNow;
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
 import com.gwen.smartlight.entity.Sensor;
@@ -93,5 +94,13 @@ public class SensorServiceImpl implements SensorService {
         return data;
     }
 
+
+    /*
+    * @return : 返回当前所有路灯的实时数据列表
+    * */
+    @Override
+    public List<SensorRealTimeData> getAllSensorRealTimeData(){
+        return sensorMapper.getAllSensorRealTimeData();
+    }
 
 }
