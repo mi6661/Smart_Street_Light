@@ -9,6 +9,7 @@
     <select id="getAllSensorRealTimeData" resultType="com.gwen.smartlight.dto.web.SensorRealTimeData">
         SELECT
             tb.light_id,
+            light.location,
             tb.temperature,
             tb.humidity,
             tb.wind_speed
@@ -17,8 +18,9 @@
                     *,
                     ROW_NUMBER() over (PARTITION BY light_id ORDER BY create_time DESC) AS rn
                 FROM sensor
-            ) AS tb
-        WHERE rn = 1;
+            ) AS tb,light
+
+        WHERE tb.light_id=light.id and rn=1
     </select>
 
 </mapper>

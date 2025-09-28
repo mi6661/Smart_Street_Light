@@ -77,5 +77,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.content-body{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 </style>
