@@ -35,7 +35,7 @@ public class LightServiceImpl implements LightService {
 
     /*
     * @param null
-    * @return 返回数据库中所有的路灯信息
+    * @return :返回数据库中所有的路灯信息
     * */
     @Override
     public List<LightInfo> getLightInfos() {

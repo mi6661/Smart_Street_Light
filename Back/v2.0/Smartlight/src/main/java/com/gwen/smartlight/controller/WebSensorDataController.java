@@ -29,10 +29,15 @@ public class WebSensorDataController {
         }
     }
 
-
+    /*
+     * @param null
+     * @return 获取所有路灯的最新的集合状态
+     */
     @GetMapping("light_temp_now")
     List<SensorsTempNow> getSensorsTempList(){
         return sensorService.getSensorDataNowById();
     }
+
+
 
 }

@@ -45,4 +45,12 @@ public class LightController {
     public List<LightInfo> getLightStatusByDistrict(@RequestParam String district){
         return lightService.getLightStatusByDistrict(district);
     }
+
+    /*
+     * 获取路灯的位置列表
+     */
+    @GetMapping("/light_location")
+    public String getLightLocations(){
+        return "test";
+    }
 }
