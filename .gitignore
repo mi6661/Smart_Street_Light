@@ -26,8 +26,8 @@ build/
 /gradlew.bat
 
 # Spring Boot
-/target/
-/build/
+*/target/
+*/build/
 *.jar
 *.war
 *.zip
