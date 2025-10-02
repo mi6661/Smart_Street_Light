@@ -9,9 +9,9 @@
 </template>
 
 <script setup>
-import LightCard from "../../components/LightCard.vue";
+import LightCard from "../../../components/data/LightCard.vue";
 import {onMounted, ref, watch} from "vue";
-import {getLightStatusByDistrict, updateLightStatus} from "../../api/lightApi.js";
+import {getLightStatusByDistrict, updateLightStatus} from "../../../api/lightApi.js";
 
 //路由出入数据
 const props = defineProps({

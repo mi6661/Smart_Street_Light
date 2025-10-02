@@ -1,16 +1,20 @@
 <template>
     <h1>地图展示</h1>
-</template>
+    </template>
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {getDefaultStyleMapURL} from "../api/mapApi.js";
+import {getDefaultStyleMapURL} from "../../api/mapApi.js";
 
 
 const locations = [
     {
         latitude: 116.481485,
         longitude: 39.990464
+    },
+    {
+        latitude: 116.491185,
+        longitude: 39.950464
     }
 ]
 

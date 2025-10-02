@@ -11,8 +11,8 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue';
-import RealtimeCard from "../../components/RealDataCard.vue";
-import {getAllSensorsRealTimeData} from "../../api/sensorApi.js";
+import RealtimeCard from "../../../components/data/RealDataCard.vue";
+import {getAllSensorsRealTimeData} from "../../../api/sensorApi.js";
 
 
 //实时温度数据

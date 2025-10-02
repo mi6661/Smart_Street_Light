@@ -27,7 +27,7 @@ export const getLightMap = async (options) => {
 
 /*获取默认值主题的地图URL*/
 export const getDefaultStyleMapURL = (locations)=>{
-    let center = '116.481485,39.990464';
+    let center = '123.495529,41.728208';
     let zoom = '10';
     let size = '750*300';
     let title = 'A';

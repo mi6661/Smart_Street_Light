@@ -1,8 +1,10 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import LightStatusView from "../views/LightStatus/LightStatusView.vue";
-import RealtimeDataView from "../views/EnvironmentData/RealtimeDataView.vue";
-import StatisticsView from "../views/EnvironmentData/StatisticsDataView.vue";
+import LightStatusView from "../views/data/LightStatus/LightStatusView.vue";
+import RealtimeDataView from "../views/data/EnvironmentData/RealtimeDataView.vue";
+import StatisticsView from "../views/data/EnvironmentData/StatisticsDataView.vue";
+import SensorDataView from "../views/data/SensorDataView.vue";
+import LightMapView from "../views/map/LightMapView.vue";
 
 /*路由规则*/
 const routes = [
@@ -12,23 +14,39 @@ const routes = [
         component: HomeView,
         children: [
             {
-                path: '/lights/:district',
-                name: 'LightsStatus',
-                component: LightStatusView,
-                props: true
+                path: '/data',
+                name: 'DataView',
+                component: SensorDataView,
+                children: [
+                    {
+                        path: '/lights/:district',
+                        name: 'LightsStatus',
+                        component: LightStatusView,
+                        props: true
+                    },
+                    {
+                        path: '/sensor/realtime',
+                        name: 'RealTimeView',
+                        component: RealtimeDataView,
+                        props: true
+                    },
+                    {
+                        path: '/sensor/statistics',
+                        name: 'StatisticsView',
+                        component: StatisticsView,
+                        props: true
+                    }
+                ]
             },
             {
-                path: '/sensor/realtime',
-                name: 'RealTimeView',
-                component: RealtimeDataView,
-                props: true
-            },
-            {
-                path: '/sensor/statistics',
-                name: 'StatisticsView',
-                component: StatisticsView,
-                props: true
+                path: '/map',
+                name: 'MapView',
+                component: LightMapView,
+                children: [
+
+                ]
             }
+
         ]
     }
 ];

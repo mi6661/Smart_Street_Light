@@ -15,5 +15,5 @@
 }
 </style>
 <script setup lang="ts">
-import RealDataCard from "./components/RealDataCard.vue";
+
 </script>
