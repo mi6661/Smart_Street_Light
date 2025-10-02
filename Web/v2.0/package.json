@@ -11,7 +11,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "@antv/g2": "^5.4.0",
-    "@vuemap/vue-amap": "^2.1.17",
+    "@map-component/vue-tmap": "^1.0.1",
     "@vueuse/motion": "^3.0.3",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.12.2",
