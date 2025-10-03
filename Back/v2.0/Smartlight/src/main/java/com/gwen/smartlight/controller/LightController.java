@@ -53,4 +53,11 @@ public class LightController {
     public String getLightLocations(){
         return "test";
     }
+
+
+    /*获取路灯位置经纬度列表*/
+    @GetMapping("/light_sites")
+    public List<String> getLightSites(){
+
+    }
 }

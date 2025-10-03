@@ -13,6 +13,8 @@ public class Light {
     public String district;
     //路灯位置
     public String location;
+    //路灯经纬度
+    public String site;
     //路灯状态
     public String status;
     //路灯亮度（0-100）

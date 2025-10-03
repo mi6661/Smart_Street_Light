@@ -4,7 +4,7 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {getDefaultStyleMapURL} from "../../api/mapApi.js";
+
 
 
 const locations = [
