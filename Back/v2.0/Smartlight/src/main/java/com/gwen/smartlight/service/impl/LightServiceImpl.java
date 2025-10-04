@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.gwen.smartlight.dto.hard.LightStatus;
 import com.gwen.smartlight.dto.web.LightInfo;
+import com.gwen.smartlight.dto.web.LightSite;
 import com.gwen.smartlight.dto.web.LightStatusPage;
 import com.gwen.smartlight.entity.Light;
 import com.gwen.smartlight.mapper.LightMapper;
@@ -85,7 +86,6 @@ public class LightServiceImpl implements LightService {
         return getLightInfos(lights);
     }
 
-
     /**
      * 从Light列表 中提取出 LightInfo列表
      * */
@@ -101,5 +101,31 @@ public class LightServiceImpl implements LightService {
             infos.add(info);
         });
         return infos;
+    }
+
+    /*
+    * 获取路灯经纬度
+    *
+    * */
+    @Override
+    public List<LightSite> getLightSites() {
+        QueryWrapper<Light> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id,site");
+        List<Light> lights = lightMapper.selectList(queryWrapper);
+        List<LightSite> sites = new ArrayList<>();
+        lights.forEach(light->{
+            LightSite site = new LightSite();
+            String strSite = light.getSite();
+            try {
+                String[] split = strSite.split(",");
+                site.setLightId(light.getId());
+                site.setLat(split[0]);
+                site.setLng(split[1]);
+                sites.add(site);
+            }catch (Exception e){
+                System.err.println("路灯经纬度格式有误："+e.getMessage());
+            }
+        });
+        return sites;
     }
 }

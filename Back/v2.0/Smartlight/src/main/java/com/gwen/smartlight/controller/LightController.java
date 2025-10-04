@@ -1,6 +1,7 @@
 package com.gwen.smartlight.controller;
 
 import com.gwen.smartlight.dto.web.LightInfo;
+import com.gwen.smartlight.dto.web.LightSite;
 import com.gwen.smartlight.dto.web.LightStatusPage;
 import com.gwen.smartlight.entity.Light;
 import com.gwen.smartlight.service.LightService;
@@ -57,7 +58,7 @@ public class LightController {
 
     /*获取路灯位置经纬度列表*/
     @GetMapping("/light_sites")
-    public List<String> getLightSites(){
-
+    public List<LightSite> getLightSites(){
+        return lightService.getLightSites();
     }
 }
