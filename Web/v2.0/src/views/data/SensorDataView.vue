@@ -4,7 +4,6 @@
 -->
 
 
-
 <template>
     <!--数据查看页面-->
     <a-layout style="padding: 24px 0; background: #fff">
@@ -47,7 +46,7 @@
             </a-menu>
         </a-layout-sider>
         <!-- 内容区域 -->
-        <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+        <a-layout-content :style="contentStyle">
             <!--路由窗口-->
             <router-view></router-view>
         </a-layout-content>
@@ -66,9 +65,15 @@ const openKeys = ref<string[]>(['sub1']);
 
 /**地区列表*/
 const districts = ref([]);
-
+/*路由*/
 const router = useRouter();
+/*窗口高度*/
+const WH = ref(window.innerHeight);
 
+const contentStyle = {
+    padding:'0 24px',
+    minHeight: WH.value+'px'
+}
 
 
 /**获取地区列表*/
@@ -99,6 +104,8 @@ const ClickEnviDataTemp = (choices)=>{
 onMounted(() => {
     fetchDistricts();
 });
+
+
 
 </script>
 

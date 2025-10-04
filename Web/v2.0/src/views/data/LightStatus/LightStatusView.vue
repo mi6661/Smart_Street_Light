@@ -1,11 +1,13 @@
 <template>
-<div class="content-body">
-    <LightCard
-        v-for="light in lights"
-        :key="light.id"
-        :light="light"
-        @update-light="handleUpdateLight"/>
-</div>
+    <div class="content-body-outer">
+        <div class="content-body-inner">
+            <LightCard
+                v-for="light in lights"
+                :key="light.id"
+                :light="light"
+                @update-light="handleUpdateLight"/>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -77,14 +79,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.content-body{
-    height: 100%;
+.content-body-outer{
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-left: auto;
-    margin-right: auto;
+}
+.content-body-inner{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,340px);
+    justify-content: center;
 }
 
 </style>

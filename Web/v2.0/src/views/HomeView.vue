@@ -17,11 +17,7 @@
                 <a-breadcrumb-item>App</a-breadcrumb-item>
             </a-breadcrumb>
             -->
-
             <router-view></router-view>
-
-
-            
         </a-layout-content>
         
         

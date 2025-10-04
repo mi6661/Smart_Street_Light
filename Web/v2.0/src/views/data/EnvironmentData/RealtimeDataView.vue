@@ -1,12 +1,15 @@
 <template>
-    <div class="card-body">
-        <RealtimeCard v-for="item in realTimeData"
-                      :location=item.location
-                      :temperature=item.temperature
-                      :humidity=item.humidity
-                      :windSpeed=item.windSpeed>
-        </RealtimeCard>
+    <div class="card-body-outer">
+        <div class="card-body-inner">
+            <RealtimeCard v-for="item in realTimeData"
+                          :location=item.location
+                          :temperature=item.temperature
+                          :humidity=item.humidity
+                          :windSpeed=item.windSpeed>
+            </RealtimeCard>
+        </div>
     </div>
+
 </template>
 
 <script setup>
@@ -17,7 +20,6 @@ import {getAllSensorsRealTimeData} from "../../../api/sensorApi.js";
 
 //实时温度数据
 const realTimeData = ref();
-
 
 
 
@@ -39,11 +41,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.card-body{
+.card-body-outer {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
+}
+.card-body-inner{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 320px);
+    gap: 16px;
     justify-content: center;
 }
 </style>

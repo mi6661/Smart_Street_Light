@@ -35,7 +35,7 @@ defineProps({
 <style scoped>
 .sensor-card {
     max-width: 320px;
-    margin: 16px auto;
+    margin: 16px 16px;
     padding: 20px;
     border-radius: 16px;
     background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
