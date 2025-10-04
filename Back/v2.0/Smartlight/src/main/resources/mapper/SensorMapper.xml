@@ -22,5 +22,16 @@
 
         WHERE tb.light_id=light.id and rn=1
     </select>
+    <!--获取每天，所有温度，湿度，风速的平均值-->
+    <select id="getAllSensorAvgData" resultType="com.gwen.smartlight.dto.web.SensorAvgData">
+        SELECT
+            DATE(sensor.create_time) AS day,
+            AVG(sensor.temperature) AS temp,
+            AVG(sensor.humidity) AS humi,
+            AVG(sensor.wind_speed) as windspeed
+        FROM sensor
+        GROUP BY day
+        ORDER BY day
+    </select>
 
 </mapper>

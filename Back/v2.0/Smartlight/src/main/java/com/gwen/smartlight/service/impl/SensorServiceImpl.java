@@ -2,6 +2,7 @@ package com.gwen.smartlight.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gwen.smartlight.dto.hard.SensorInfo;
+import com.gwen.smartlight.dto.web.SensorAvgData;
 import com.gwen.smartlight.dto.web.SensorRealTimeData;
 import com.gwen.smartlight.dto.web.SensorsTempNow;
 import com.gwen.smartlight.dto.web.SensorDataOnDetailCard;
@@ -83,17 +84,13 @@ public class SensorServiceImpl implements SensorService {
             temperatureWrapper.orderByDesc("create_time");
             temperatureWrapper.last("limit 1");//只需要最新数据即可
             List<Sensor> temperatureList = sensorMapper.selectList(temperatureWrapper);
-
             SensorsTempNow sensorDataNow = new SensorsTempNow();
             sensorDataNow.setId(temperatureList.get(0).getId());
             sensorDataNow.setTemperature(temperatureList.get(0).getTemperature());
-
             data.add(sensorDataNow);
         });
-
         return data;
     }
-
 
     /*
     * @return : 返回当前所有路灯的实时数据列表
@@ -101,6 +98,12 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public List<SensorRealTimeData> getAllSensorRealTimeData(){
         return sensorMapper.getAllSensorRealTimeData();
+    }
+
+    /*获取每天传感器数据的平均值*/
+    @Override
+    public List<SensorAvgData> getAllSensorAvgData() {
+        return sensorMapper.getAllSensorAvgData();
     }
 
 }

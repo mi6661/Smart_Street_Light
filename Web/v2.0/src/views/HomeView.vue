@@ -20,8 +20,6 @@
             <router-view></router-view>
         </a-layout-content>
         
-        
-        
         <!--底部区域-->
         <a-layout-footer style="text-align: center">
             Gwen Design ©2025 Created by Gwen

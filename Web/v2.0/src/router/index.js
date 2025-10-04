@@ -2,7 +2,7 @@ import {createRouter, createWebHashHistory} from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import LightStatusView from "../views/data/LightStatus/LightStatusView.vue";
 import RealtimeDataView from "../views/data/EnvironmentData/RealtimeDataView.vue";
-import StatisticsView from "../views/data/EnvironmentData/StatisticsDataView.vue";
+import SensorAnalysis from "../views/data/EnvironmentData/SensorAnalysis.vue";
 import SensorDataView from "../views/data/SensorDataView.vue";
 import LightMapView from "../views/map/LightMapView.vue";
 
@@ -32,8 +32,8 @@ const routes = [
                     },
                     {
                         path: '/sensor/statistics',
-                        name: 'StatisticsView',
-                        component: StatisticsView,
+                        name: 'SensorAnalysis',
+                        component: SensorAnalysis,
                         props: true
                     }
                 ]

@@ -31,7 +31,7 @@
                                 </span>
                     </template>
                     <a-menu-item key="realtime" @click.stop="ClickEnviDataTemp('realtime')">实时监测</a-menu-item>
-                    <a-menu-item key="statistics" @click.stop="ClickEnviDataTemp('statistics')">数据统计</a-menu-item>
+                    <a-menu-item key="statistics" @click.stop="ClickEnviDataTemp('analysis')">数据统计</a-menu-item>
                 </a-sub-menu>
                 <a-sub-menu key="sub3">
                     <template #title>
@@ -94,8 +94,8 @@ const ClickEnviDataTemp = (choices)=>{
     if(choices === "realtime"){
         router.push({name: 'RealTimeView'});
     }
-    if(choices === "statistics"){
-        router.push({name: 'StatisticsView'});
+    if(choices === "analysis"){
+        router.push({name: 'SensorAnalysis'});
     }
 }
 
